@@ -1,0 +1,1 @@
+docker ps -a | findstr "fb118"
