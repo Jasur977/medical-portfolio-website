@@ -17,7 +17,7 @@ const CourseList = forwardRef(({ onSelectCourse, isAdmin, onEditCourse }, ref) =
             })
             .catch(err => {
                 console.error(err);
-                setError('Failed to load medical courses.');
+                setError(t('failed_load_courses'));
                 setLoading(false);
             });
     };
@@ -32,12 +32,12 @@ const CourseList = forwardRef(({ onSelectCourse, isAdmin, onEditCourse }, ref) =
 
     const handleDelete = async (e, id) => {
         e.stopPropagation();
-        if (window.confirm("Are you sure you want to delete this course and all its lessons?")) {
+        if (window.confirm(t('confirm_delete_course'))) {
             try {
                 await deleteCourse(id);
                 loadCourses();
             } catch (err) {
-                alert("Failed to delete course.");
+                alert(t('failed_delete_course'));
             }
         }
     };
@@ -49,32 +49,13 @@ const CourseList = forwardRef(({ onSelectCourse, isAdmin, onEditCourse }, ref) =
         }
     };
 
-    if (loading) {
-        return (
-            <div className="flex justify-center py-20">
-                <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600"></div>
-            </div>
-        );
-    }
-
-    if (error) {
-        return <div className="text-center py-10 text-red-500">{error}</div>;
-    }
-
-    if (courses.length === 0) {
-        return (
-            <div className="bg-white p-12 rounded-xl border border-gray-200 text-center shadow-sm max-w-7xl mx-auto">
-                <svg className="mx-auto h-12 w-12 text-gray-400 mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z"></path></svg>
-                <h3 className="text-lg font-medium text-gray-900">{t('no_courses_available')}</h3>
-                <p className="mt-2 text-gray-500">{t('no_courses_desc')}</p>
-            </div>
-        );
-    }
-
     return (
-        <div id="education" className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-24 bg-white">
+        <div id="education" className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-24 bg-white border-t border-slate-200">
             <div className="text-center mb-16">
-                <h2 className="text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">
+                <span className="text-xs font-bold uppercase tracking-wider text-blue-600 bg-blue-50 px-3 py-1 rounded-full border border-blue-100">
+                    {t('medical_education_sub')}
+                </span>
+                <h2 className="text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl mt-3">
                     {t('medical_education')}
                 </h2>
                 <p className="mt-4 text-lg text-gray-500 max-w-2xl mx-auto">
@@ -82,7 +63,28 @@ const CourseList = forwardRef(({ onSelectCourse, isAdmin, onEditCourse }, ref) =
                 </p>
             </div>
 
-            <div className="grid gap-10 lg:grid-cols-3 md:grid-cols-2">
+            {loading ? (
+                <div className="flex justify-center py-20">
+                    <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600"></div>
+                </div>
+            ) : error ? (
+                <div className="bg-red-50 p-6 rounded-xl border border-red-200 text-center text-red-600 max-w-md mx-auto">
+                    <p className="font-semibold">{error}</p>
+                    <button 
+                        onClick={loadCourses} 
+                        className="mt-3 px-4 py-1.5 bg-red-600 hover:bg-red-700 text-white rounded-lg text-xs font-bold transition cursor-pointer"
+                    >
+                        {t('retry')}
+                    </button>
+                </div>
+            ) : courses.length === 0 ? (
+                <div className="bg-white p-12 rounded-xl border border-gray-200 text-center shadow-sm max-w-2xl mx-auto">
+                    <svg className="mx-auto h-12 w-12 text-gray-400 mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z"></path></svg>
+                    <h3 className="text-lg font-medium text-gray-900">{t('no_courses_available')}</h3>
+                    <p className="mt-2 text-gray-500">{t('no_courses_desc')}</p>
+                </div>
+            ) : (
+                <div className="grid gap-10 lg:grid-cols-3 md:grid-cols-2">
                 {courses.map(course => (
                     <div key={course.id} className="flex flex-col bg-white rounded-2xl shadow-lg border border-gray-100 overflow-hidden hover:shadow-xl transition-shadow duration-300 transform hover:-translate-y-1 relative group">
                         
@@ -91,14 +93,14 @@ const CourseList = forwardRef(({ onSelectCourse, isAdmin, onEditCourse }, ref) =
                                 <button 
                                     onClick={(e) => handleEdit(e, course)}
                                     className="bg-white text-green-600 p-1.5 rounded-md shadow hover:bg-green-50 border border-green-100"
-                                    title="Edit Course"
+                                    title={t('edit_course')}
                                 >
                                     <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"></path></svg>
                                 </button>
                                 <button 
                                     onClick={(e) => handleDelete(e, course.id)}
                                     className="bg-white text-red-600 p-1.5 rounded-md shadow hover:bg-red-50 border border-red-100"
-                                    title="Delete Course"
+                                    title={t('delete')}
                                 >
                                     <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path></svg>
                                 </button>
@@ -143,6 +145,7 @@ const CourseList = forwardRef(({ onSelectCourse, isAdmin, onEditCourse }, ref) =
                     </div>
                 ))}
             </div>
+            )}
         </div>
     );
 });

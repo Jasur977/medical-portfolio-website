@@ -24,6 +24,11 @@ public class CourseController {
         return service.getAllCourses();
     }
 
+    @GetMapping("/search")
+    public List<Course> searchCourses(@RequestParam String query) {
+        return service.searchCourses(query);
+    }
+
     @GetMapping("/{id}")
     public ResponseEntity<Course> getCourseById(@PathVariable UUID id) {
         return service.getCourseById(id)

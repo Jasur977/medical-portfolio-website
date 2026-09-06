@@ -1,6 +1,17 @@
-// Use a relative path so it works perfectly in Docker/Nginx in production
-// but falls back to localhost during local Vite development
-const API_BASE_URL = import.meta.env.PROD ? '/api' : 'http://localhost:8080/api';
+// Dynamically determine the backend API URL:
+// In Docker / production (port 80/443), use relative '/api' proxied by Nginx.
+// In local Vite dev (port 5173/3000), target the exposed backend at port 8081.
+const getApiBaseUrl = () => {
+    if (typeof window !== 'undefined') {
+        const port = window.location.port;
+        if (port === '5173' || port === '3000') {
+            return 'http://localhost:8081/api';
+        }
+    }
+    return import.meta.env.VITE_API_URL || '/api';
+};
+
+const API_BASE_URL = getApiBaseUrl();
 
 // Helper function to get auth headers
 const getAuthHeaders = () => {
@@ -49,6 +60,19 @@ export const fetchHealth = async () => {
         return await response.text();
     } catch (error) {
         console.error('Error fetching health status:', error);
+        throw error;
+    }
+};
+
+export const searchEverything = async (query) => {
+    try {
+        const response = await fetch(`${API_BASE_URL}/search?query=${encodeURIComponent(query)}`);
+        if (!response.ok) {
+            throw new Error('Network response was not ok');
+        }
+        return await response.json();
+    } catch (error) {
+        console.error('Error searching:', error);
         throw error;
     }
 };

@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react';
+import { useState, useRef } from 'react';
 import { createCourse, uploadImage, createLesson } from '../api';
 
 export default function CourseAdminPanel({ onCourseAdded }) {
@@ -53,6 +53,7 @@ export default function CourseAdminPanel({ onCourseAdded }) {
                 imageUrl: data.imageUrl
             }));
         } catch (error) {
+            console.error("Image upload failed:", error);
             alert('Failed to upload image.');
         } finally {
             setIsUploading(false);
@@ -69,6 +70,7 @@ export default function CourseAdminPanel({ onCourseAdded }) {
             setIsOpen(false);
             if (onCourseAdded) onCourseAdded();
         } catch (error) {
+            console.error("Course creation failed:", error);
             alert('Failed to add course.');
         } finally {
             setIsSubmitting(false);
@@ -93,6 +95,7 @@ export default function CourseAdminPanel({ onCourseAdded }) {
             setIsOpen(false);
             if (onCourseAdded) onCourseAdded(); // Refresh courses
         } catch (error) {
+            console.error("Lesson creation failed:", error);
             alert('Failed to add lesson. Ensure Course ID is correct.');
         } finally {
             setIsSubmitting(false);

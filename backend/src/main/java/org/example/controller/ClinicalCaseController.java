@@ -23,6 +23,11 @@ public class ClinicalCaseController {
         return service.getAllCases();
     }
 
+    @GetMapping("/search")
+    public List<ClinicalCase> searchCases(@RequestParam String query) {
+        return service.searchCases(query);
+    }
+
     @GetMapping("/{id}")
     public ResponseEntity<ClinicalCase> getCaseById(@PathVariable UUID id) {
         return service.getCaseById(id)

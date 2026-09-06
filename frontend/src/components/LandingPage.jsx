@@ -1,4 +1,3 @@
-import React from 'react';
 import { useTranslation } from 'react-i18next';
 import heroImage from '../assets/hero.png';
 
@@ -24,26 +23,57 @@ export default function LandingPage({ profile }) {
                     
                     {/* Left Column: Text Content */}
                     <div className="mx-auto max-w-2xl lg:mx-0 lg:flex-auto">
-                        <h1 className="mt-10 max-w-lg text-4xl font-bold tracking-tight text-gray-900 sm:text-6xl">
-                            {profile?.name || "Doctor Name"}
+                        <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-blue-50 border border-blue-200 text-blue-800 text-xs font-bold uppercase tracking-wider mb-4 shadow-sm">
+                            <span className="w-2 h-2 rounded-full bg-blue-600 animate-pulse"></span>
+                            {t('platform_badge')}
+                        </div>
+                        <h1 className="text-4xl font-extrabold tracking-tight text-gray-900 sm:text-6xl">
+                            {profile?.name || "Dr. Elbek Mamatkulov"}
                         </h1>
-                        <p className="mt-4 text-xl leading-8 text-blue-600 font-semibold">
-                            {profile?.credentials || "Pediatric Endocrinologist"}
+                        <p className="mt-3 text-xl leading-8 text-blue-600 font-bold">
+                            {profile?.credentials || "Pediatric & Adult Endocrinologist, PhD Researcher"}
                         </p>
-                        <p className="mt-6 text-lg leading-8 text-gray-600 max-w-xl">
-                            Specializing in comprehensive endocrine care for children. Committed to providing advanced medical diagnostics, personalized treatment plans, and continuous patient education.
+                        <p className="mt-4 text-base sm:text-lg leading-relaxed text-gray-600 max-w-xl">
+                            {t('hero_desc')}
                         </p>
                         
-                        <div className="mt-10 flex items-center gap-x-6">
+                        {/* Action Buttons */}
+                        <div className="mt-8 flex flex-wrap items-center gap-3">
                             <a 
-                                href="#contact" 
-                                className="rounded-md bg-blue-600 px-5 py-3.5 text-sm font-semibold text-white shadow-sm hover:bg-blue-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-600"
+                                href="#calculators" 
+                                className="rounded-xl bg-blue-600 px-5 py-3 text-sm font-bold text-white shadow-md hover:bg-blue-700 transition flex items-center gap-2 cursor-pointer"
                             >
-                                {t('book_appointment')}
+                                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 7h6m0 10v-3m-3 3h.01M9 17h.01M9 14h.01M12 14h.01M15 11h.01M12 11h.01M9 11h.01M7 21h10a2 2 0 002-2V5a2 2 0 00-2-2H7a2 2 0 00-2 2v14a2 2 0 002 2z"></path></svg>
+                                {t('btn_calculators')}
                             </a>
-                            <a href="#clinical-cases" className="text-sm font-semibold leading-6 text-gray-900">
-                                {t('view_clinical_cases')} <span aria-hidden="true">→</span>
+                            <a 
+                                href="#for-physicians" 
+                                className="rounded-xl bg-slate-900 px-5 py-3 text-sm font-bold text-white shadow-md hover:bg-slate-800 transition flex items-center gap-2 cursor-pointer"
+                            >
+                                🩺 {t('nav_for_physicians')}
                             </a>
+                            <a 
+                                href="#for-patients" 
+                                className="rounded-xl bg-white border border-gray-300 px-5 py-3 text-sm font-bold text-gray-800 shadow-sm hover:bg-gray-50 transition flex items-center gap-2 cursor-pointer"
+                            >
+                                👨‍👩‍👧 {t('nav_for_patients')}
+                            </a>
+                        </div>
+
+                        {/* Metric Highlights */}
+                        <div className="mt-10 grid grid-cols-3 gap-4 border-t border-gray-200/80 pt-6">
+                            <div>
+                                <span className="block text-2xl font-black text-blue-900">50</span>
+                                <span className="block text-xs font-semibold text-gray-500 uppercase">{t('stat_clinical_tools')}</span>
+                            </div>
+                            <div>
+                                <span className="block text-2xl font-black text-blue-900">7</span>
+                                <span className="block text-xs font-semibold text-gray-500 uppercase">{t('stat_specialty_modules')}</span>
+                            </div>
+                            <div>
+                                <span className="block text-2xl font-black text-blue-900">3</span>
+                                <span className="block text-xs font-semibold text-gray-500 uppercase">{t('stat_languages')}</span>
+                            </div>
                         </div>
                     </div>
 
@@ -81,7 +111,7 @@ export default function LandingPage({ profile }) {
                         <div className="flex flex-col items-center text-center sm:col-span-2 lg:col-span-1">
                             <svg className="w-8 h-8 mb-3 text-blue-300" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"></path></svg>
                             <h3 className="text-lg font-semibold">{t('specialty')}</h3>
-                            <p className="mt-2 text-sm text-blue-200">Pediatric Endocrinology<br/>Medical Education</p>
+                            <p className="mt-2 text-sm text-blue-200">{t('pediatric_endocrinology')}<br/>{t('medical_education_sub')}</p>
                         </div>
                     </div>
                 </div>

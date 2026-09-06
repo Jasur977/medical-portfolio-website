@@ -15,6 +15,7 @@ const ClinicalCaseList = forwardRef(({ isAdmin, onEditCase }, ref) => {
 
     const loadCases = () => {
         setLoading(true);
+        setError(null);
         fetchClinicalCases()
             .then(data => {
                 setCases(data);
@@ -22,7 +23,7 @@ const ClinicalCaseList = forwardRef(({ isAdmin, onEditCase }, ref) => {
             })
             .catch(err => {
                 console.error(err);
-                setError('Failed to load clinical cases.');
+                setError(t('failed_load_cases'));
                 setLoading(false);
             });
     };
@@ -37,12 +38,12 @@ const ClinicalCaseList = forwardRef(({ isAdmin, onEditCase }, ref) => {
 
     const handleDelete = async (e, id) => {
         e.stopPropagation();
-        if (window.confirm("Are you sure you want to delete this clinical case?")) {
+        if (window.confirm(t('confirm_delete_case'))) {
             try {
                 await deleteClinicalCase(id);
                 loadCases(); 
             } catch (err) {
-                alert("Failed to delete case.");
+                alert(t('failed_delete_case'));
             }
         }
     };
@@ -83,7 +84,7 @@ const ClinicalCaseList = forwardRef(({ isAdmin, onEditCase }, ref) => {
                                     : 'bg-white text-gray-600 border border-gray-200 hover:bg-gray-100'
                             }`}
                         >
-                            {category}
+                            {category === 'All' ? t('all_categories') : category}
                         </button>
                     ))}
                 </div>
@@ -94,7 +95,15 @@ const ClinicalCaseList = forwardRef(({ isAdmin, onEditCase }, ref) => {
                     <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600"></div>
                 </div>
             ) : error ? (
-                <div className="text-center py-10 text-red-500">{error}</div>
+                <div className="bg-red-50 p-6 rounded-xl border border-red-200 text-center text-red-600 max-w-md mx-auto">
+                    <p className="font-semibold">{error}</p>
+                    <button 
+                        onClick={loadCases} 
+                        className="mt-3 px-4 py-1.5 bg-red-600 hover:bg-red-700 text-white rounded-lg text-xs font-bold transition cursor-pointer"
+                    >
+                        {t('retry')}
+                    </button>
+                </div>
             ) : cases.length === 0 ? (
                 <div className="bg-white p-12 rounded-xl border border-gray-200 text-center shadow-sm">
                     <svg className="mx-auto h-12 w-12 text-gray-400 mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path></svg>
@@ -111,14 +120,14 @@ const ClinicalCaseList = forwardRef(({ isAdmin, onEditCase }, ref) => {
                                     <button 
                                         onClick={(e) => handleEdit(e, clinicalCase)}
                                         className="bg-white text-blue-600 p-1.5 rounded-md shadow hover:bg-blue-50 border border-blue-100"
-                                        title="Edit Case"
+                                        title={t('edit_case')}
                                     >
                                         <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"></path></svg>
                                     </button>
                                     <button 
                                         onClick={(e) => handleDelete(e, clinicalCase.id)}
                                         className="bg-white text-red-600 p-1.5 rounded-md shadow hover:bg-red-50 border border-red-100"
-                                        title="Delete Case"
+                                        title={t('delete_case')}
                                     >
                                         <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path></svg>
                                     </button>

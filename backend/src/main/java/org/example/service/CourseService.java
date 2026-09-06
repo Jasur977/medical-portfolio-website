@@ -32,4 +32,8 @@ public class CourseService {
     public void deleteCourse(UUID id) {
         repository.deleteById(id);
     }
+
+    public List<Course> searchCourses(String query) {
+        return repository.findByTitleContainingIgnoreCase(query);
+    }
 }

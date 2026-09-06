@@ -14,11 +14,11 @@ export default function DoctorProfile({ profile, isAdmin, onEditClick }) {
                 <div className="absolute top-4 right-4 z-10 opacity-0 group-hover:opacity-100 transition-opacity duration-200">
                     <button 
                         onClick={() => onEditClick(profile)}
-                        className="bg-white text-blue-600 px-3 py-2 rounded-md shadow-md hover:bg-blue-50 border border-blue-100 flex items-center font-medium text-sm"
+                        className="bg-white text-blue-600 px-3 py-2 rounded-md shadow-md hover:bg-blue-50 border border-blue-100 flex items-center font-medium text-sm cursor-pointer"
                         title="Edit Doctor Profile"
                     >
                         <svg className="w-4 h-4 mr-1.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"></path></svg>
-                        Edit Profile
+                        {t('edit_profile')}
                     </button>
                 </div>
             )}

@@ -32,4 +32,8 @@ public class ClinicalCaseService {
     public void deleteCase(UUID id) {
         repository.deleteById(id);
     }
+
+    public List<ClinicalCase> searchCases(String query) {
+        return repository.findByTitleContainingIgnoreCase(query);
+    }
 }

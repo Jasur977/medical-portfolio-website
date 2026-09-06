@@ -1,7 +1,9 @@
 import React, { useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { login } from '../api';
 
 export default function LoginModal({ isOpen, onClose, onLoginSuccess }) {
+    const { t } = useTranslation();
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
     const [error, setError] = useState('');
@@ -20,7 +22,7 @@ export default function LoginModal({ isOpen, onClose, onLoginSuccess }) {
             setUsername('');
             setPassword('');
         } catch (err) {
-            setError('Invalid username or password');
+            setError(t('invalid_credentials'));
         } finally {
             setIsLoading(false);
         }
@@ -30,8 +32,8 @@ export default function LoginModal({ isOpen, onClose, onLoginSuccess }) {
         <div className="fixed inset-0 bg-gray-900/75 flex items-center justify-center z-[100] p-4 backdrop-blur-sm">
             <div className="bg-white rounded-xl shadow-2xl w-full max-w-md overflow-hidden">
                 <div className="px-6 py-4 border-b border-gray-100 flex justify-between items-center bg-gray-50">
-                    <h2 className="text-xl font-bold text-gray-900">Admin Login</h2>
-                    <button onClick={onClose} className="text-gray-400 hover:text-gray-600">
+                    <h2 className="text-xl font-bold text-gray-900">{t('admin_login')}</h2>
+                    <button onClick={onClose} className="text-gray-400 hover:text-gray-600 cursor-pointer">
                         <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18L18 6M6 6l12 12"></path></svg>
                     </button>
                 </div>
@@ -45,7 +47,7 @@ export default function LoginModal({ isOpen, onClose, onLoginSuccess }) {
 
                     <form onSubmit={handleSubmit} className="space-y-4">
                         <div>
-                            <label className="block text-sm font-medium text-gray-700 mb-1">Username</label>
+                            <label className="block text-sm font-medium text-gray-700 mb-1">{t('username')}</label>
                             <input 
                                 type="text" 
                                 required 
@@ -55,7 +57,7 @@ export default function LoginModal({ isOpen, onClose, onLoginSuccess }) {
                             />
                         </div>
                         <div>
-                            <label className="block text-sm font-medium text-gray-700 mb-1">Password</label>
+                            <label className="block text-sm font-medium text-gray-700 mb-1">{t('password')}</label>
                             <input 
                                 type="password" 
                                 required 
@@ -69,9 +71,9 @@ export default function LoginModal({ isOpen, onClose, onLoginSuccess }) {
                             <button 
                                 type="submit" 
                                 disabled={isLoading}
-                                className="w-full flex justify-center py-2.5 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 disabled:opacity-50"
+                                className="w-full flex justify-center py-2.5 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 disabled:opacity-50 cursor-pointer"
                             >
-                                {isLoading ? 'Authenticating...' : 'Sign In'}
+                                {isLoading ? t('authenticating') : t('sign_in')}
                             </button>
                         </div>
                     </form>
