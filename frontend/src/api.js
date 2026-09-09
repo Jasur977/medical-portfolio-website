@@ -8,10 +8,35 @@ const getApiBaseUrl = () => {
             return 'http://localhost:8081/api';
         }
     }
-    return import.meta.env.VITE_API_URL || '/api';
+    const envUrl = import.meta.env.VITE_API_URL;
+    if (envUrl && typeof envUrl === 'string' && envUrl.trim()) {
+        const trimmed = envUrl.trim().replace(/\/+$/, '');
+        return trimmed.endsWith('/api') ? trimmed : `${trimmed}/api`;
+    }
+    return '/api';
 };
 
 const API_BASE_URL = getApiBaseUrl();
+
+// Helper function to decode JWT payload safely
+export const parseJwt = (token) => {
+    if (!token || typeof token !== 'string') return null;
+    try {
+        const parts = token.split('.');
+        if (parts.length < 2) return null;
+        const base64Url = parts[1];
+        const base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
+        const jsonPayload = decodeURIComponent(
+            atob(base64)
+                .split('')
+                .map(c => '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2))
+                .join('')
+        );
+        return JSON.parse(jsonPayload);
+    } catch (e) {
+        return null;
+    }
+};
 
 // Helper function to get auth headers
 const getAuthHeaders = () => {
@@ -34,8 +59,12 @@ export const login = async (username, password) => {
         }
         
         const data = await response.json();
-        // Save the token to local storage
+        // Save token and initialize activity timestamp
         localStorage.setItem('token', data.token);
+        localStorage.setItem('admin_last_activity', Date.now().toString());
+        if (typeof window !== 'undefined') {
+            window.dispatchEvent(new Event('auth:login'));
+        }
         return data;
     } catch (error) {
         console.error('Login error:', error);
@@ -45,10 +74,22 @@ export const login = async (username, password) => {
 
 export const logout = () => {
     localStorage.removeItem('token');
+    localStorage.removeItem('admin_last_activity');
+    if (typeof window !== 'undefined') {
+        window.dispatchEvent(new Event('auth:logout'));
+    }
 };
 
 export const isAuthenticated = () => {
-    return !!localStorage.getItem('token');
+    const token = localStorage.getItem('token');
+    if (!token) return false;
+    const payload = parseJwt(token);
+    // If token is expired, clean up immediately
+    if (payload && payload.exp && payload.exp * 1000 < Date.now()) {
+        logout();
+        return false;
+    }
+    return true;
 };
 
 export const fetchHealth = async () => {

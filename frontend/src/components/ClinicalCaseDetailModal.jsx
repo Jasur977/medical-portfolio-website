@@ -38,20 +38,20 @@ export default function ClinicalCaseDetailModal({ caseData, caseDetails, onClose
     };
 
     return (
-        <div className="fixed inset-0 bg-gray-900/75 flex items-center justify-center z-[100] p-4 sm:p-6 overflow-y-auto backdrop-blur-sm">
-            <div className="bg-white rounded-2xl shadow-2xl w-full max-w-4xl overflow-hidden flex flex-col my-auto max-h-full">
+        <div className="fixed inset-0 bg-slate-950/80 flex items-center justify-center z-[100] p-4 sm:p-6 overflow-y-auto backdrop-blur-md">
+            <div className="bg-slate-900 rounded-3xl shadow-2xl w-full max-w-4xl overflow-hidden flex flex-col my-auto max-h-full border border-slate-800 text-white animate-fadeIn">
                 
                 {/* Header Actions */}
-                <div className="flex justify-between items-center px-6 py-4 border-b border-gray-100 bg-gray-50/50 sticky top-0 z-10">
+                <div className="flex justify-between items-center px-6 py-4 border-b border-slate-800 bg-slate-950/80 sticky top-0 z-10">
                     <div className="flex items-center space-x-3">
-                        <span className="inline-flex items-center rounded-full bg-blue-100 px-3 py-1 text-sm font-semibold text-blue-800">
+                        <span className="inline-flex items-center rounded-xl bg-blue-500/15 border border-blue-400/30 px-3 py-1 text-xs font-bold text-cyan-300">
                             {activeCase.category || 'General'}
                         </span>
                         {isAdmin && (
                             <div className="flex space-x-2">
                                 <button 
                                     onClick={onEdit}
-                                    className="bg-white text-blue-600 px-2 py-1 text-xs font-semibold rounded shadow hover:bg-blue-50 border border-blue-100 flex items-center cursor-pointer"
+                                    className="bg-slate-800 text-cyan-300 px-3 py-1 text-xs font-bold rounded-xl shadow hover:bg-slate-700 border border-slate-700 flex items-center cursor-pointer"
                                     title={t('edit_case')}
                                 >
                                     <svg className="w-3.5 h-3.5 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"></path></svg>
@@ -59,7 +59,7 @@ export default function ClinicalCaseDetailModal({ caseData, caseDetails, onClose
                                 </button>
                                 <button 
                                     onClick={handleDeleteClick}
-                                    className="bg-white text-red-600 px-2 py-1 text-xs font-semibold rounded shadow hover:bg-red-50 border border-red-100 flex items-center cursor-pointer"
+                                    className="bg-slate-800 text-rose-400 px-3 py-1 text-xs font-bold rounded-xl shadow hover:bg-slate-700 border border-slate-700 flex items-center cursor-pointer"
                                     title={t('delete_case')}
                                 >
                                     <svg className="w-3.5 h-3.5 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path></svg>
@@ -70,7 +70,7 @@ export default function ClinicalCaseDetailModal({ caseData, caseDetails, onClose
                     </div>
                     <button 
                         onClick={onClose} 
-                        className="text-gray-400 hover:text-gray-600 bg-white hover:bg-gray-100 rounded-full p-2 transition-colors focus:outline-none focus:ring-2 focus:ring-blue-500 cursor-pointer"
+                        className="text-slate-400 hover:text-white bg-slate-800 hover:bg-slate-700 rounded-xl p-2 transition cursor-pointer"
                     >
                         <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18L18 6M6 6l12 12"></path>
@@ -82,14 +82,14 @@ export default function ClinicalCaseDetailModal({ caseData, caseDetails, onClose
                 <div className="overflow-y-auto flex-1 p-6 sm:p-8 space-y-8">
                     
                     <div>
-                        <h2 className="text-3xl font-extrabold text-gray-900 mb-6 leading-tight">
+                        <h2 className="text-2xl sm:text-3xl font-black text-white mb-6 leading-tight">
                             {activeCase.title}
                         </h2>
                     </div>
 
                     {/* Image Section (if available) */}
                     {activeCase.imageUrl && (
-                        <div className="rounded-xl overflow-hidden bg-gray-100 border border-gray-200 flex justify-center items-center max-h-[500px]">
+                        <div className="rounded-2xl overflow-hidden bg-slate-950 border border-slate-800 flex justify-center items-center max-h-[500px]">
                             <img 
                                 src={activeCase.imageUrl} 
                                 alt="Clinical case" 
@@ -100,12 +100,12 @@ export default function ClinicalCaseDetailModal({ caseData, caseDetails, onClose
 
                     {/* Presentation */}
                     <div>
-                        <h3 className="text-xl font-bold text-gray-800 mb-3 flex items-center">
-                            <svg className="w-6 h-6 mr-2 text-blue-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path></svg>
+                        <h3 className="text-lg font-bold text-white mb-3 flex items-center gap-2">
+                            <span className="text-cyan-400">📋</span>
                             {t('clinical_presentation')}
                         </h3>
-                        <div className="bg-gray-50 rounded-lg p-5 border border-gray-100">
-                            <p className="text-gray-700 leading-relaxed whitespace-pre-wrap">
+                        <div className="bg-slate-950/60 rounded-2xl p-5 border border-slate-800">
+                            <p className="text-slate-300 leading-relaxed whitespace-pre-wrap text-sm sm:text-base">
                                 {activeCase.presentation}
                             </p>
                         </div>
@@ -113,19 +113,19 @@ export default function ClinicalCaseDetailModal({ caseData, caseDetails, onClose
 
                     {/* Lab Results / Diagnostics */}
                     <div>
-                        <h3 className="text-xl font-bold text-gray-800 mb-3 flex items-center">
-                            <svg className="w-6 h-6 mr-2 text-blue-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z"></path></svg>
+                        <h3 className="text-lg font-bold text-white mb-3 flex items-center gap-2">
+                            <span className="text-cyan-400">🔬</span>
                             {t('diagnostics')}
                         </h3>
-                        <div className="bg-white rounded-lg border border-gray-200 overflow-hidden shadow-sm">
-                            <table className="min-w-full divide-y divide-gray-200">
-                                <tbody className="divide-y divide-gray-200 bg-white">
+                        <div className="bg-slate-950/60 rounded-2xl border border-slate-800 overflow-hidden shadow-sm">
+                            <table className="min-w-full divide-y divide-slate-800">
+                                <tbody className="divide-y divide-slate-800">
                                     {Object.entries(labResultsParsed).map(([key, value], index) => (
-                                        <tr key={index} className={index % 2 === 0 ? 'bg-gray-50' : 'bg-white'}>
-                                            <td className="whitespace-nowrap py-3 pl-4 pr-3 text-sm font-semibold text-gray-900 sm:pl-6 w-1/3">
+                                        <tr key={index} className={index % 2 === 0 ? 'bg-slate-900/40' : 'bg-slate-950/40'}>
+                                            <td className="whitespace-nowrap py-3 pl-4 pr-3 text-xs sm:text-sm font-semibold text-cyan-300 sm:pl-6 w-1/3">
                                                 {key}
                                             </td>
-                                            <td className="py-3 pl-3 pr-4 text-sm text-gray-700 sm:pr-6 whitespace-pre-wrap">
+                                            <td className="py-3 pl-3 pr-4 text-xs sm:text-sm text-slate-300 sm:pr-6 whitespace-pre-wrap">
                                                 {value}
                                             </td>
                                         </tr>
@@ -137,12 +137,12 @@ export default function ClinicalCaseDetailModal({ caseData, caseDetails, onClose
 
                     {/* Management */}
                     <div>
-                        <h3 className="text-xl font-bold text-gray-800 mb-3 flex items-center">
-                            <svg className="w-6 h-6 mr-2 text-blue-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"></path></svg>
+                        <h3 className="text-lg font-bold text-white mb-3 flex items-center gap-2">
+                            <span className="text-emerald-400">💊</span>
                             {t('diagnosis_management')}
                         </h3>
-                        <div className="bg-blue-50 rounded-lg p-5 border border-blue-100">
-                            <p className="text-blue-900 leading-relaxed whitespace-pre-wrap font-medium">
+                        <div className="bg-blue-950/40 rounded-2xl p-5 border border-blue-500/30">
+                            <p className="text-cyan-200 leading-relaxed whitespace-pre-wrap text-sm sm:text-base font-medium">
                                 {activeCase.management}
                             </p>
                         </div>
@@ -151,10 +151,10 @@ export default function ClinicalCaseDetailModal({ caseData, caseDetails, onClose
                 </div>
 
                 {/* Footer */}
-                <div className="border-t border-gray-100 px-6 py-4 bg-gray-50 flex justify-end">
+                <div className="border-t border-slate-800 px-6 py-4 bg-slate-950/80 flex justify-end">
                     <button 
                         onClick={onClose}
-                        className="px-5 py-2.5 bg-gray-900 text-white font-medium rounded-lg hover:bg-gray-800 transition-colors shadow-sm focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-900 cursor-pointer"
+                        className="px-5 py-2.5 bg-slate-800 hover:bg-slate-700 text-white font-bold text-xs rounded-xl transition cursor-pointer border border-slate-700"
                     >
                         {t('close_case')}
                     </button>

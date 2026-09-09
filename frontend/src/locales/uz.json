@@ -200,5 +200,12 @@
   "video_url": "Video joylashtirish havolasi (embed URL)",
   "view_clinical_cases": "Klinik holatlarni ko'rish",
   "view_pubmed": "PubMed manzilini ochish",
-  "welcome": "Tibbiyot Mutaxassislari Platformasiga Xush Kelibsiz"
+  "welcome": "Tibbiyot Mutaxassislari Platformasiga Xush Kelibsiz",
+  "session_expires_in": "Sessiya tugashiga",
+  "session_warning_title": "Admin sessiyasi tugamoqda",
+  "session_warning_desc": "Harakatsizlik tufayli admin sessiyangiz {{seconds}} soniyadan so'ng yakunlanadi. Tizimda qolishni xohlaysizmi?",
+  "stay_logged_in": "Tizimda qolish",
+  "session_expired_notice": "Klinik xavfsizlik maqsadida harakatsizlik tufayli tizimdan avtomatik chiqildi.",
+  "admin_active": "Admin faol",
+  "extend_session": "Uzaytirish"
 }

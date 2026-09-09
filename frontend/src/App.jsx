@@ -1,6 +1,8 @@
 import { useState, useEffect, useRef } from 'react'
 import { useTranslation } from 'react-i18next';
 import { fetchHealth, fetchProfiles, isAuthenticated, logout } from './api';
+import { useAdminSession } from './hooks/useAdminSession';
+import AdminSessionModal, { AdminSessionBadge } from './components/AdminSessionModal';
 import LandingPage from './components/LandingPage';
 import CalculatorsHub from './components/CalculatorsHub';
 import ForPhysicians from './components/ForPhysicians';
@@ -23,6 +25,7 @@ function App() {
   const [healthStatus, setHealthStatus] = useState('checking_status');
   const [profiles, setProfiles] = useState([]);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [activeSection, setActiveSection] = useState('home');
   
   // Auth state
   const [isAdmin, setIsAdmin] = useState(() => isAuthenticated());
@@ -90,7 +93,81 @@ function App() {
   const handleLogout = () => {
       logout();
       setIsAdmin(false);
+      setCaseToEdit(null);
+      setCourseToEdit(null);
+      setProfileToEdit(null);
   };
+
+  const {
+      remainingSeconds,
+      formattedTime,
+      showWarning: showSessionWarning,
+      extendSession
+  } = useAdminSession({
+      isAdmin,
+      onLogout: handleLogout,
+      timeoutMinutes: 100,
+      warningSeconds: 60
+  });
+
+  // Listen for external auth events
+  useEffect(() => {
+      const onAuthLogout = () => {
+          setIsAdmin(false);
+          setCaseToEdit(null);
+          setCourseToEdit(null);
+          setProfileToEdit(null);
+      };
+      const onAuthLogin = () => {
+          setIsAdmin(true);
+      };
+      window.addEventListener('auth:logout', onAuthLogout);
+      window.addEventListener('auth:login', onAuthLogin);
+      return () => {
+          window.removeEventListener('auth:logout', onAuthLogout);
+          window.removeEventListener('auth:login', onAuthLogin);
+      };
+  }, []);
+
+  // Scroll spy to detect active section
+  useEffect(() => {
+    const sectionIds = ['home', 'calculators', 'for-physicians', 'for-patients', 'clinical-cases', 'education', 'about', 'media'];
+    
+    const handleScroll = () => {
+      const scrollPosition = window.scrollY + 180;
+      
+      if (window.scrollY < 120) {
+        setActiveSection('home');
+        return;
+      }
+
+      for (let i = sectionIds.length - 1; i >= 0; i--) {
+        const el = document.getElementById(sectionIds[i]);
+        if (el) {
+          const top = el.offsetTop;
+          if (scrollPosition >= top) {
+            setActiveSection(sectionIds[i]);
+            break;
+          }
+        }
+      }
+    };
+
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    handleScroll();
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+
+  const navItems = [
+    { id: 'home', label: t('nav_home'), href: '#home' },
+    { id: 'calculators', label: t('nav_calculators'), href: '#calculators', badge: '50' },
+    { id: 'for-physicians', label: t('nav_for_physicians'), href: '#for-physicians' },
+    { id: 'for-patients', label: t('nav_for_patients'), href: '#for-patients' },
+    { id: 'clinical-cases', label: t('nav_clinical_cases'), href: '#clinical-cases' },
+    { id: 'education', label: t('nav_education'), href: '#education' },
+    { id: 'about', label: t('nav_about'), href: '#about' },
+    { id: 'media', label: t('nav_media'), href: '#media' },
+  ];
 
   const mainProfile = profiles.length > 0 ? profiles[0] : null;
 
@@ -109,37 +186,52 @@ function App() {
   }
 
   return (
-    <div className="min-h-screen bg-slate-50 text-slate-900 font-sans relative selection:bg-blue-600 selection:text-white">
+    <div className="min-h-screen bg-[#080d1a] text-slate-100 font-sans relative selection:bg-cyan-500 selection:text-white">
       
       {/* Top Navigation Bar */}
-      <nav className="bg-white/95 backdrop-blur-md shadow-sm border-b border-slate-200/80 px-4 sm:px-6 py-3.5 flex justify-between items-center sticky top-0 z-40">
+      <nav className="bg-slate-950/85 backdrop-blur-xl shadow-xl border-b border-slate-800/80 px-4 sm:px-6 py-3.5 flex justify-between items-center sticky top-0 z-40 text-white">
          
          {/* Brand Logo */}
          <div className="flex items-center space-x-3">
             <a href="#" className="flex items-center space-x-2.5 group">
-                <div className="w-10 h-10 rounded-xl bg-blue-600 text-white flex items-center justify-center shadow-md shadow-blue-500/20 group-hover:bg-blue-700 transition">
+                <div className="w-10 h-10 rounded-xl bg-gradient-to-tr from-blue-600 to-cyan-500 text-white flex items-center justify-center shadow-lg shadow-blue-500/30 group-hover:from-blue-500 group-hover:to-cyan-400 transition-all">
                     <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z"></path></svg>
                 </div>
                 <div>
-                    <h1 className="text-lg font-black text-slate-900 tracking-tight leading-none">Endo<span className="text-blue-600">Care</span></h1>
-                    <span className="text-[10px] font-bold text-slate-500 uppercase tracking-wider block mt-0.5">{t('platform_subtitle_short')}</span>
+                    <h1 className="text-lg font-black text-white tracking-tight leading-none">Endo<span className="text-cyan-400">Care</span></h1>
+                    <span className="text-[10px] font-bold text-slate-400 uppercase tracking-wider block mt-0.5">{t('platform_subtitle_short')}</span>
                 </div>
             </a>
          </div>
          
          {/* Desktop Navigation Links */}
-         <div className="hidden xl:flex items-center space-x-6 text-sm font-semibold text-slate-700">
-            <a href="#" className="hover:text-blue-600 transition-colors">{t('nav_home')}</a>
-            <a href="#calculators" className="hover:text-blue-600 transition-colors flex items-center gap-1.5 text-blue-700 font-bold bg-blue-50 px-2.5 py-1 rounded-lg border border-blue-200">
-                <span>{t('nav_calculators')}</span>
-                <span className="bg-blue-600 text-white text-[10px] font-black px-1.5 py-0.2 rounded-full">50</span>
-            </a>
-            <a href="#for-physicians" className="hover:text-blue-600 transition-colors">{t('nav_for_physicians')}</a>
-            <a href="#for-patients" className="hover:text-blue-600 transition-colors">{t('nav_for_patients')}</a>
-            <a href="#clinical-cases" className="hover:text-blue-600 transition-colors">{t('nav_clinical_cases')}</a>
-            <a href="#education" className="hover:text-blue-600 transition-colors">{t('nav_education')}</a>
-            <a href="#about" className="hover:text-blue-600 transition-colors">{t('nav_about')}</a>
-            <a href="#media" className="hover:text-blue-600 transition-colors">{t('nav_media')}</a>
+         <div className="hidden xl:flex items-center space-x-1.5 text-sm font-semibold">
+            {navItems.map((item) => {
+                const isActive = activeSection === item.id;
+                return (
+                    <a 
+                        key={item.id}
+                        href={item.href}
+                        onClick={() => setActiveSection(item.id)}
+                        className={`transition-all duration-200 flex items-center gap-1.5 px-3 py-1.5 rounded-xl cursor-pointer ${
+                            isActive
+                                ? 'text-cyan-300 font-bold bg-blue-500/20 border border-blue-400/40 shadow-sm shadow-cyan-500/10'
+                                : 'text-slate-300 hover:text-white hover:bg-slate-800/70 border border-transparent hover:border-slate-700/50'
+                        }`}
+                    >
+                        <span>{item.label}</span>
+                        {item.badge && (
+                            <span className={`text-[10px] font-black px-1.5 py-0.2 rounded-full transition-colors ${
+                                isActive
+                                    ? 'bg-gradient-to-r from-blue-600 to-cyan-500 text-white shadow-sm'
+                                    : 'bg-slate-800 text-cyan-300 border border-slate-700'
+                            }`}>
+                                {item.badge}
+                            </span>
+                        )}
+                    </a>
+                );
+            })}
          </div>
 
          {/* Global Search & Right side controls */}
@@ -149,18 +241,25 @@ function App() {
             </div>
 
             {/* Language Switcher */}
-            <div className="flex bg-slate-100 p-1 rounded-xl border border-slate-200">
-                <button onClick={() => changeLanguage('uz')} className={`px-2 py-1 rounded-lg text-xs font-bold transition-all cursor-pointer ${i18n.language === 'uz' ? 'bg-white text-blue-700 shadow-sm' : 'text-slate-600 hover:text-slate-900'}`}>UZ</button>
-                <button onClick={() => changeLanguage('ru')} className={`px-2 py-1 rounded-lg text-xs font-bold transition-all cursor-pointer ${i18n.language === 'ru' ? 'bg-white text-blue-700 shadow-sm' : 'text-slate-600 hover:text-slate-900'}`}>RU</button>
-                <button onClick={() => changeLanguage('en')} className={`px-2 py-1 rounded-lg text-xs font-bold transition-all cursor-pointer ${i18n.language === 'en' ? 'bg-white text-blue-700 shadow-sm' : 'text-slate-600 hover:text-slate-900'}`}>EN</button>
+            <div className="flex bg-slate-900/90 p-1 rounded-xl border border-slate-800 shadow-inner">
+                <button onClick={() => changeLanguage('uz')} className={`px-2 py-1 rounded-lg text-xs font-bold transition-all cursor-pointer ${i18n.language === 'uz' ? 'bg-gradient-to-r from-blue-600 to-indigo-600 text-white shadow-sm' : 'text-slate-400 hover:text-white'}`}>UZ</button>
+                <button onClick={() => changeLanguage('ru')} className={`px-2 py-1 rounded-lg text-xs font-bold transition-all cursor-pointer ${i18n.language === 'ru' ? 'bg-gradient-to-r from-blue-600 to-indigo-600 text-white shadow-sm' : 'text-slate-400 hover:text-white'}`}>RU</button>
+                <button onClick={() => changeLanguage('en')} className={`px-2 py-1 rounded-lg text-xs font-bold transition-all cursor-pointer ${i18n.language === 'en' ? 'bg-gradient-to-r from-blue-600 to-indigo-600 text-white shadow-sm' : 'text-slate-400 hover:text-white'}`}>EN</button>
             </div>
             
-            {/* Admin Login / Logout */}
-            <div className="border-l border-slate-200 pl-3 sm:pl-4">
+            {/* Admin Login / Session Timer / Logout */}
+            <div className="border-l border-slate-800 pl-3 sm:pl-4 flex items-center gap-2.5">
+                {isAdmin && (
+                    <AdminSessionBadge 
+                        formattedTime={formattedTime}
+                        remainingSeconds={remainingSeconds}
+                        onExtend={extendSession}
+                    />
+                )}
                 {isAdmin ? (
-                    <button onClick={handleLogout} className="text-xs sm:text-sm font-bold text-red-600 hover:text-red-800 transition-colors cursor-pointer">{t('logout_admin')}</button>
+                    <button onClick={handleLogout} className="text-xs sm:text-sm font-bold text-rose-400 hover:text-rose-300 transition-colors cursor-pointer">{t('logout_admin')}</button>
                 ) : (
-                    <button onClick={() => setShowLoginModal(true)} className="text-xs sm:text-sm font-bold text-slate-600 hover:text-blue-600 transition-colors cursor-pointer">{t('doctor_login')}</button>
+                    <button onClick={() => setShowLoginModal(true)} className="text-xs sm:text-sm font-bold text-slate-300 hover:text-cyan-400 transition-colors cursor-pointer">{t('doctor_login')}</button>
                 )}
             </div>
 
@@ -168,7 +267,7 @@ function App() {
             <div className="xl:hidden">
                 <button 
                     onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-                    className="p-2 rounded-xl text-slate-600 hover:bg-slate-100 transition cursor-pointer"
+                    className="p-2 rounded-xl text-slate-300 hover:bg-slate-800 transition cursor-pointer"
                     aria-label="Toggle menu"
                 >
                     <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -185,18 +284,36 @@ function App() {
 
       {/* Mobile Menu Drawer */}
       {mobileMenuOpen && (
-          <div className="xl:hidden bg-white border-b border-slate-200 px-6 py-4 space-y-3 text-sm font-bold shadow-lg sticky top-[69px] z-30 animate-fadeIn">
-              <a href="#" onClick={() => setMobileMenuOpen(false)} className="block py-2 text-slate-700 hover:text-blue-600">{t('nav_home')}</a>
-              <a href="#calculators" onClick={() => setMobileMenuOpen(false)} className="block py-2 text-blue-600 flex items-center justify-between">
-                  <span>{t('nav_calculators')}</span>
-                  <span className="bg-blue-600 text-white text-xs px-2 py-0.5 rounded-full">50 {t('tools')}</span>
-              </a>
-              <a href="#for-physicians" onClick={() => setMobileMenuOpen(false)} className="block py-2 text-slate-700 hover:text-blue-600">{t('nav_for_physicians')}</a>
-              <a href="#for-patients" onClick={() => setMobileMenuOpen(false)} className="block py-2 text-slate-700 hover:text-blue-600">{t('nav_for_patients')}</a>
-              <a href="#clinical-cases" onClick={() => setMobileMenuOpen(false)} className="block py-2 text-slate-700 hover:text-blue-600">{t('nav_clinical_cases')}</a>
-              <a href="#education" onClick={() => setMobileMenuOpen(false)} className="block py-2 text-slate-700 hover:text-blue-600">{t('nav_education')}</a>
-              <a href="#about" onClick={() => setMobileMenuOpen(false)} className="block py-2 text-slate-700 hover:text-blue-600">{t('nav_about')}</a>
-              <a href="#media" onClick={() => setMobileMenuOpen(false)} className="block py-2 text-slate-700 hover:text-blue-600">{t('nav_media')}</a>
+          <div className="xl:hidden bg-slate-950/95 border-b border-slate-800 px-6 py-4 space-y-1.5 text-sm font-bold shadow-2xl sticky top-[69px] z-30 animate-fadeIn backdrop-blur-xl">
+              {navItems.map((item) => {
+                  const isActive = activeSection === item.id;
+                  return (
+                      <a
+                          key={item.id}
+                          href={item.href}
+                          onClick={() => {
+                              setActiveSection(item.id);
+                              setMobileMenuOpen(false);
+                          }}
+                          className={`flex items-center justify-between px-3.5 py-2.5 rounded-xl transition-all ${
+                              isActive
+                                  ? 'text-cyan-300 font-bold bg-blue-500/20 border border-blue-400/40'
+                                  : 'text-slate-300 hover:text-white hover:bg-slate-800/60'
+                          }`}
+                      >
+                          <span>{item.label}</span>
+                          {item.badge && (
+                              <span className={`text-xs px-2 py-0.5 rounded-full font-bold ${
+                                  isActive
+                                      ? 'bg-gradient-to-r from-blue-600 to-cyan-500 text-white'
+                                      : 'bg-slate-800 text-cyan-300 border border-slate-700'
+                              }`}>
+                                  {item.badge} {t('tools')}
+                              </span>
+                          )}
+                      </a>
+                  );
+              })}
           </div>
       )}
 
@@ -204,6 +321,13 @@ function App() {
         isOpen={showLoginModal} 
         onClose={() => setShowLoginModal(false)} 
         onLoginSuccess={handleLoginSuccess}
+      />
+
+      <AdminSessionModal 
+        isOpen={showSessionWarning}
+        remainingSeconds={remainingSeconds}
+        onExtend={extendSession}
+        onLogout={handleLogout}
       />
 
       {selectedCase && (
@@ -250,13 +374,13 @@ function App() {
       />
 
       {/* 7. About Doctor / Academic Profile */}
-      <main id="about" className="max-w-5xl mx-auto p-4 py-20 flex flex-col items-center">
+      <main id="about" className="max-w-5xl mx-auto p-4 py-24 flex flex-col items-center scroll-mt-16">
         <div className="text-center mb-12">
-            <span className="text-xs font-bold uppercase tracking-wider text-blue-600 bg-blue-50 px-3 py-1 rounded-full border border-blue-100">
+            <span className="text-xs font-bold uppercase tracking-wider text-cyan-400 bg-blue-500/10 px-3.5 py-1.5 rounded-full border border-blue-500/25 shadow-sm">
                 {t('academic_leadership_badge')}
             </span>
-            <h2 className="text-3xl font-extrabold tracking-tight text-slate-900 sm:text-4xl mt-3">{t('about_doctor')}</h2>
-            <p className="mt-4 text-base sm:text-lg text-slate-600 max-w-2xl">{t('about_doctor_desc')}</p>
+            <h2 className="text-3xl font-black tracking-tight text-white sm:text-4xl mt-3">{t('about_doctor')}</h2>
+            <p className="mt-4 text-base sm:text-lg text-slate-400 max-w-2xl">{t('about_doctor_desc')}</p>
         </div>
         
         <div className="w-full">
@@ -267,8 +391,8 @@ function App() {
                     onEditClick={handleEditProfile}
                 />
             ) : (
-                <div className="bg-white p-8 rounded-2xl shadow-sm border border-slate-200 text-center">
-                    <p className="text-slate-500 italic">{t('no_profiles')}</p>
+                <div className="bg-slate-900/80 p-8 rounded-2xl shadow-xl border border-slate-800 text-center">
+                    <p className="text-slate-400 italic">{t('no_profiles')}</p>
                 </div>
             )}
         </div>

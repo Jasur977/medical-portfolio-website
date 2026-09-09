@@ -200,5 +200,12 @@
   "video_url": "Video Embed URL",
   "view_clinical_cases": "View Clinical Cases",
   "view_pubmed": "View PubMed Reference",
-  "welcome": "Welcome to the Medical Professional Platform"
+  "welcome": "Welcome to the Medical Professional Platform",
+  "session_expires_in": "Session expires in",
+  "session_warning_title": "Admin Session Expiring",
+  "session_warning_desc": "Your admin session will expire in {{seconds}}s due to inactivity. Would you like to stay logged in?",
+  "stay_logged_in": "Stay Logged In",
+  "session_expired_notice": "You were automatically logged out due to inactivity for clinical security.",
+  "admin_active": "Admin Active",
+  "extend_session": "Extend"
 }

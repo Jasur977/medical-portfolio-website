@@ -311,57 +311,57 @@ export default function ForPhysicians() {
     const currentAlgorithmData = algorithms.find(a => a.id === activeAlgorithm) || algorithms[0];
 
     return (
-        <section id="for-physicians" className="py-20 bg-white border-t border-slate-200">
+        <section id="for-physicians" className="py-20 bg-[#070c18] border-t border-slate-800/80 text-white scroll-mt-16">
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 
                 {/* Header */}
                 <div className="text-center max-w-3xl mx-auto mb-16">
-                    <span className="inline-flex items-center gap-1.5 px-3.5 py-1 rounded-full text-xs font-bold tracking-wide uppercase bg-indigo-100 text-indigo-800 mb-4 shadow-sm">
-                        <svg className="w-4 h-4 text-indigo-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path></svg>
+                    <span className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full text-xs font-bold tracking-wide uppercase bg-indigo-500/15 border border-indigo-400/30 text-indigo-300 mb-4 shadow-lg backdrop-blur-md">
+                        <svg className="w-4 h-4 text-indigo-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path></svg>
                         {t('physicians_badge')}
                     </span>
-                    <h2 className="text-3xl sm:text-4xl font-extrabold text-slate-900 tracking-tight">
+                    <h2 className="text-3xl sm:text-4xl font-black text-white tracking-tight">
                         {t('physicians_title')}
                     </h2>
-                    <p className="mt-3 text-lg text-slate-600">
+                    <p className="mt-3 text-base sm:text-lg text-slate-400">
                         {t('physicians_subtitle')}
                     </p>
                 </div>
 
                 {/* International Guidelines Grid */}
                 <div className="mb-20">
-                    <h3 className="text-xl font-bold text-slate-900 mb-6 flex items-center gap-2">
+                    <h3 className="text-xl font-bold text-white mb-6 flex items-center gap-2">
                         <span>📚</span> {t('guidelines_library_title')}
                     </h3>
                     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                         {guidelines.map((g, idx) => (
                             <div 
                                 key={idx}
-                                className="bg-slate-50 border border-slate-200 rounded-2xl p-6 flex flex-col justify-between hover:shadow-md hover:border-indigo-300 transition-all group"
+                                className="bg-slate-900/80 border border-slate-800 rounded-2xl p-6 flex flex-col justify-between hover:shadow-2xl hover:border-indigo-500/50 hover:shadow-indigo-500/10 transition-all group"
                             >
                                 <div>
                                     <div className="flex items-center justify-between mb-3">
-                                        <span className="text-xs font-bold uppercase tracking-wider text-indigo-600 bg-indigo-50 border border-indigo-100 px-2.5 py-0.5 rounded-full">
+                                        <span className="text-xs font-bold uppercase tracking-wider text-indigo-400 bg-indigo-500/15 border border-indigo-500/30 px-2.5 py-0.5 rounded-full">
                                             {g.society}
                                         </span>
-                                        <span className="text-xs font-semibold text-slate-500">
+                                        <span className="text-xs font-semibold text-slate-400">
                                             {g.badge}
                                         </span>
                                     </div>
-                                    <h4 className="text-base font-bold text-slate-900 group-hover:text-indigo-700 transition">
+                                    <h4 className="text-base font-bold text-white group-hover:text-indigo-300 transition">
                                         {g.title[currentLang] || g.title.en}
                                     </h4>
-                                    <p className="mt-2 text-xs text-slate-600 leading-relaxed">
+                                    <p className="mt-2 text-xs text-slate-400 leading-relaxed">
                                         {g.desc[currentLang] || g.desc.en}
                                     </p>
                                 </div>
 
-                                <div className="mt-6 pt-4 border-t border-slate-200 flex items-center justify-between">
+                                <div className="mt-6 pt-4 border-t border-slate-800 flex items-center justify-between">
                                     <a
                                         href={g.link}
                                         target="_blank"
                                         rel="noreferrer"
-                                        className="text-xs font-bold text-indigo-600 hover:text-indigo-800 flex items-center gap-1 group-hover:underline"
+                                        className="text-xs font-bold text-indigo-400 hover:text-indigo-300 flex items-center gap-1 group-hover:underline"
                                     >
                                         {t('access_guideline')}
                                         <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path></svg>
@@ -373,12 +373,12 @@ export default function ForPhysicians() {
                 </div>
 
                 {/* Interactive Diagnostic Flowcharts & Clinical Decision Algorithms */}
-                <div className="bg-slate-900 text-white rounded-3xl p-8 sm:p-10 shadow-xl">
+                <div className="bg-slate-950/80 text-white rounded-3xl p-8 sm:p-10 shadow-2xl border border-slate-800">
                     <div className="max-w-3xl mb-8">
                         <span className="text-xs font-bold uppercase tracking-wider text-indigo-400">
                             {t('decision_support_badge')}
                         </span>
-                        <h3 className="text-2xl font-bold mt-1">
+                        <h3 className="text-2xl font-black mt-1 text-white">
                             {t('decision_pathways_title')}
                         </h3>
                         <p className="text-slate-400 text-sm mt-1">
@@ -394,8 +394,8 @@ export default function ForPhysicians() {
                                 onClick={() => setActiveAlgorithm(algo.id)}
                                 className={`px-4 py-2 rounded-xl text-xs font-bold transition cursor-pointer ${
                                     activeAlgorithm === algo.id
-                                        ? 'bg-indigo-600 text-white shadow-lg shadow-indigo-500/30'
-                                        : 'bg-slate-800 text-slate-300 hover:bg-slate-700'
+                                        ? 'bg-indigo-600 text-white shadow-lg shadow-indigo-500/30 ring-2 ring-indigo-400 ring-offset-2 ring-offset-slate-950'
+                                        : 'bg-slate-900 text-slate-400 hover:bg-slate-800 hover:text-white border border-slate-800'
                                 }`}
                             >
                                 {algo.title[currentLang] || algo.title.en}
@@ -404,12 +404,12 @@ export default function ForPhysicians() {
                     </div>
 
                     {/* Flowchart Content */}
-                    <div className="bg-slate-800/80 rounded-2xl p-6 border border-slate-700">
+                    <div className="bg-slate-900/90 rounded-2xl p-6 border border-slate-800">
                         <div className="space-y-4 text-sm">
                             {currentAlgorithmData.steps.map((step, idx) => (
                                 <React.Fragment key={idx}>
                                     <div className="flex items-start gap-4">
-                                        <div className={`w-8 h-8 rounded-full ${step.color} flex items-center justify-center font-bold flex-shrink-0 text-white`}>
+                                        <div className={`w-8 h-8 rounded-full ${step.color} flex items-center justify-center font-bold flex-shrink-0 text-white shadow-md`}>
                                             {step.num}
                                         </div>
                                         <div>
@@ -422,8 +422,8 @@ export default function ForPhysicians() {
                                         </div>
                                     </div>
                                     {step.connector && (
-                                        <div className="border-l-2 border-slate-700 ml-4 pl-8 py-2">
-                                            <span className="text-xs font-mono text-indigo-400">
+                                        <div className="border-l-2 border-slate-800 ml-4 pl-8 py-2">
+                                            <span className="text-xs font-mono text-cyan-400">
                                                 {step.connector[currentLang] || step.connector.en}
                                             </span>
                                         </div>
@@ -435,18 +435,18 @@ export default function ForPhysicians() {
                 </div>
 
                 {/* Consultation & Case Referral Banner */}
-                <div className="mt-12 bg-gradient-to-r from-blue-50 to-indigo-50 border border-blue-100 rounded-3xl p-8 flex flex-col md:flex-row items-center justify-between gap-6">
+                <div className="mt-12 bg-gradient-to-r from-blue-950/40 via-slate-900 to-indigo-950/40 border border-blue-500/30 rounded-3xl p-8 flex flex-col md:flex-row items-center justify-between gap-6 shadow-xl">
                     <div className="max-w-2xl">
-                        <h4 className="text-xl font-bold text-slate-900">
+                        <h4 className="text-xl font-bold text-white">
                             {t('consultation_title')}
                         </h4>
-                        <p className="text-sm text-slate-600 mt-1 leading-relaxed">
+                        <p className="text-sm text-slate-300 mt-1 leading-relaxed">
                             {t('consultation_desc')}
                         </p>
                     </div>
                     <a
                         href="#contact"
-                        className="px-6 py-3 bg-blue-600 hover:bg-blue-700 text-white text-sm font-semibold rounded-xl transition shadow-md whitespace-nowrap cursor-pointer"
+                        className="px-6 py-3 bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-500 hover:to-indigo-500 text-white text-sm font-bold rounded-xl transition shadow-lg shadow-blue-500/25 whitespace-nowrap cursor-pointer"
                     >
                         {t('refer_patient_btn')}
                     </a>

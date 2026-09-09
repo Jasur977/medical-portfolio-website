@@ -159,19 +159,19 @@ export default function ForPatients() {
     ];
 
     return (
-        <section id="for-patients" className="py-20 bg-slate-50 border-t border-slate-200">
+        <section id="for-patients" className="py-20 bg-[#0B1120] border-t border-slate-800/80 text-white scroll-mt-16">
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 
                 {/* Header */}
                 <div className="text-center max-w-3xl mx-auto mb-16">
-                    <span className="inline-flex items-center gap-1.5 px-3.5 py-1 rounded-full text-xs font-bold tracking-wide uppercase bg-emerald-100 text-emerald-800 mb-4 shadow-sm">
-                        <svg className="w-4 h-4 text-emerald-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M14.828 14.828a4 4 0 01-5.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                    <span className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full text-xs font-bold tracking-wide uppercase bg-emerald-500/15 border border-emerald-400/30 text-emerald-300 mb-4 shadow-lg backdrop-blur-md">
+                        <svg className="w-4 h-4 text-emerald-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M14.828 14.828a4 4 0 01-5.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
                         {t('patients_badge')}
                     </span>
-                    <h2 className="text-3xl sm:text-4xl font-extrabold text-slate-900 tracking-tight">
+                    <h2 className="text-3xl sm:text-4xl font-black text-white tracking-tight">
                         {t('patients_title')}
                     </h2>
-                    <p className="mt-3 text-lg text-slate-600">
+                    <p className="mt-3 text-base sm:text-lg text-slate-400">
                         {t('patients_subtitle')}
                     </p>
                 </div>
@@ -181,19 +181,19 @@ export default function ForPatients() {
                     {guides.map((guide, idx) => (
                         <div 
                             key={idx}
-                            className="bg-white rounded-2xl border border-slate-200 p-6 shadow-sm hover:shadow-md transition-all flex flex-col justify-between"
+                            className="bg-slate-900/80 rounded-2xl border border-slate-800 p-6 shadow-xl hover:border-emerald-500/50 hover:shadow-emerald-500/10 transition-all flex flex-col justify-between group"
                         >
                             <div>
                                 <div className="text-3xl mb-3">{guide.icon}</div>
-                                <h4 className="text-lg font-bold text-slate-900 mb-2">
+                                <h4 className="text-lg font-bold text-white group-hover:text-emerald-300 transition mb-2">
                                     {guide.title[currentLang] || guide.title.en}
                                 </h4>
-                                <p className="text-sm text-slate-600 leading-relaxed">
+                                <p className="text-sm text-slate-400 leading-relaxed">
                                     {guide.desc[currentLang] || guide.desc.en}
                                 </p>
                             </div>
-                            <div className="mt-6 p-3 bg-emerald-50/60 border border-emerald-100 rounded-xl text-xs text-emerald-900">
-                                <span className="font-bold block text-emerald-700">💡 {t('doctors_tip')}</span>
+                            <div className="mt-6 p-3.5 bg-emerald-950/40 border border-emerald-500/30 rounded-xl text-xs text-emerald-200">
+                                <span className="font-bold block text-emerald-400 mb-0.5">💡 {t('doctors_tip')}</span>
                                 {guide.keyTip[currentLang] || guide.keyTip.en}
                             </div>
                         </div>
@@ -201,30 +201,30 @@ export default function ForPatients() {
                 </div>
 
                 {/* Appointment Preparation Checklist Card */}
-                <div className="bg-white rounded-3xl border border-slate-200 shadow-sm p-8 sm:p-10 mb-16">
+                <div className="bg-slate-900/80 rounded-3xl border border-slate-800 shadow-2xl p-8 sm:p-10 mb-16">
                     <div className="max-w-2xl mb-8">
-                        <span className="text-xs font-bold uppercase tracking-wider text-blue-600">
+                        <span className="text-xs font-bold uppercase tracking-wider text-cyan-400 bg-blue-500/15 border border-blue-500/30 px-3 py-1 rounded-full">
                             {t('checklist_badge')}
                         </span>
-                        <h3 className="text-2xl font-bold text-slate-900 mt-1">
+                        <h3 className="text-2xl font-black text-white mt-3">
                             {t('appointment_prep_title')}
                         </h3>
-                        <p className="text-slate-600 text-sm mt-1">
+                        <p className="text-slate-400 text-sm mt-1">
                             {t('appointment_prep_desc')}
                         </p>
                     </div>
 
                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
                         {checklist.map((item, idx) => (
-                            <div key={idx} className="flex items-start gap-4 p-4 rounded-xl bg-slate-50 border border-slate-100">
-                                <div className="w-8 h-8 rounded-full bg-blue-100 text-blue-700 flex items-center justify-center font-bold text-sm flex-shrink-0">
+                            <div key={idx} className="flex items-start gap-4 p-4 rounded-xl bg-slate-950/70 border border-slate-800">
+                                <div className="w-8 h-8 rounded-full bg-cyan-500/20 border border-cyan-500/30 text-cyan-300 flex items-center justify-center font-bold text-sm flex-shrink-0 shadow-inner">
                                     ✓
                                 </div>
                                 <div>
-                                    <h5 className="font-bold text-slate-900 text-sm">
+                                    <h5 className="font-bold text-white text-sm">
                                         {item.title[currentLang] || item.title.en}
                                     </h5>
-                                    <p className="text-xs text-slate-600 mt-1 leading-relaxed">
+                                    <p className="text-xs text-slate-400 mt-1 leading-relaxed">
                                         {item.desc[currentLang] || item.desc.en}
                                     </p>
                                 </div>
@@ -235,7 +235,7 @@ export default function ForPatients() {
 
                 {/* FAQ Accordion */}
                 <div className="max-w-3xl mx-auto">
-                    <h3 className="text-2xl font-bold text-slate-900 text-center mb-8">
+                    <h3 className="text-2xl font-bold text-white text-center mb-8">
                         {t('faqs_title')}
                     </h3>
                     <div className="space-y-4">
@@ -244,19 +244,19 @@ export default function ForPatients() {
                             return (
                                 <div 
                                     key={idx}
-                                    className="bg-white rounded-2xl border border-slate-200 overflow-hidden shadow-sm transition"
+                                    className="bg-slate-900/80 rounded-2xl border border-slate-800 overflow-hidden shadow-lg transition"
                                 >
                                     <button
                                         onClick={() => setOpenFaq(isOpen ? null : idx)}
-                                        className="w-full text-left px-6 py-4 flex items-center justify-between font-bold text-slate-900 text-sm sm:text-base hover:text-blue-600 transition cursor-pointer"
+                                        className="w-full text-left px-6 py-4 flex items-center justify-between font-bold text-white text-sm sm:text-base hover:text-cyan-300 transition cursor-pointer"
                                     >
                                         <span>{faq.q[currentLang] || faq.q.en}</span>
-                                        <span className={`text-slate-400 transform transition-transform duration-200 ${isOpen ? 'rotate-180 text-blue-600' : ''}`}>
+                                        <span className={`text-slate-400 transform transition-transform duration-200 ${isOpen ? 'rotate-180 text-cyan-400' : ''}`}>
                                             ▼
                                         </span>
                                     </button>
                                     {isOpen && (
-                                        <div className="px-6 pb-5 pt-1 text-sm text-slate-600 border-t border-slate-100 leading-relaxed bg-slate-50/50">
+                                        <div className="px-6 pb-5 pt-2 text-sm text-slate-300 border-t border-slate-800 leading-relaxed bg-slate-950/60">
                                             {faq.a[currentLang] || faq.a.en}
                                         </div>
                                     )}

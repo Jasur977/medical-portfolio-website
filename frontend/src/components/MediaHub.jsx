@@ -8,8 +8,8 @@ export default function MediaHub() {
     const channels = [
         {
             platform: 'YouTube',
-            iconColor: 'text-red-600 bg-red-50 border-red-200',
-            btnColor: 'bg-red-600 hover:bg-red-700 text-white',
+            iconColor: 'text-red-400 bg-red-500/15 border-red-500/30',
+            btnColor: 'bg-red-600 hover:bg-red-500 text-white shadow-lg shadow-red-500/25',
             title: {
                 en: 'Video Lectures & Explainer Series',
                 ru: 'Видеолекции и разборы клинических случаев',
@@ -30,8 +30,8 @@ export default function MediaHub() {
         },
         {
             platform: 'Telegram',
-            iconColor: 'text-sky-600 bg-sky-50 border-sky-200',
-            btnColor: 'bg-sky-600 hover:bg-sky-700 text-white',
+            iconColor: 'text-sky-400 bg-sky-500/15 border-sky-500/30',
+            btnColor: 'bg-sky-500 hover:bg-sky-400 text-white shadow-lg shadow-sky-500/25',
             title: {
                 en: 'Official Clinical Telegram Channel',
                 ru: 'Официальный Telegram-канал для врачей',
@@ -52,8 +52,8 @@ export default function MediaHub() {
         },
         {
             platform: 'Instagram',
-            iconColor: 'text-pink-600 bg-pink-50 border-pink-200',
-            btnColor: 'bg-gradient-to-r from-purple-600 to-pink-600 hover:opacity-95 text-white',
+            iconColor: 'text-pink-400 bg-pink-500/15 border-pink-500/30',
+            btnColor: 'bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-500 hover:to-pink-500 text-white shadow-lg shadow-pink-500/25',
             title: {
                 en: 'Educational Infographics & Reels',
                 ru: 'Инфографика и короткие видео в Instagram',
@@ -74,8 +74,8 @@ export default function MediaHub() {
         },
         {
             platform: 'Facebook',
-            iconColor: 'text-blue-700 bg-blue-50 border-blue-200',
-            btnColor: 'bg-blue-700 hover:bg-blue-800 text-white',
+            iconColor: 'text-blue-400 bg-blue-500/15 border-blue-500/30',
+            btnColor: 'bg-blue-600 hover:bg-blue-500 text-white shadow-lg shadow-blue-500/25',
             title: {
                 en: 'Professional Medical Announcements',
                 ru: 'Профессиональное сообщество в Facebook',
@@ -97,19 +97,19 @@ export default function MediaHub() {
     ];
 
     return (
-        <section id="media" className="py-20 bg-white border-t border-slate-200">
+        <section id="media" className="py-20 bg-[#070c18] border-t border-slate-800/80 text-white scroll-mt-16">
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 
                 {/* Header */}
                 <div className="text-center max-w-3xl mx-auto mb-16">
-                    <span className="inline-flex items-center gap-1.5 px-3.5 py-1 rounded-full text-xs font-bold tracking-wide uppercase bg-rose-100 text-rose-800 mb-4 shadow-sm">
-                        <svg className="w-4 h-4 text-rose-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z"></path></svg>
+                    <span className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full text-xs font-bold tracking-wide uppercase bg-rose-500/15 border border-rose-500/30 text-rose-300 mb-4 shadow-lg backdrop-blur-md">
+                        <svg className="w-4 h-4 text-rose-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z"></path></svg>
                         {t('media_badge')}
                     </span>
-                    <h2 className="text-3xl sm:text-4xl font-extrabold text-slate-900 tracking-tight">
+                    <h2 className="text-3xl sm:text-4xl font-black text-white tracking-tight">
                         {t('media_title')}
                     </h2>
-                    <p className="mt-3 text-lg text-slate-600">
+                    <p className="mt-3 text-base sm:text-lg text-slate-400">
                         {t('media_subtitle')}
                     </p>
                 </div>
@@ -119,27 +119,27 @@ export default function MediaHub() {
                     {channels.map((ch, idx) => (
                         <div 
                             key={idx}
-                            className="bg-slate-50 border border-slate-200 rounded-3xl p-8 hover:shadow-lg transition-all flex flex-col justify-between"
+                            className="bg-slate-900/80 border border-slate-800 rounded-3xl p-8 hover:border-slate-700 hover:shadow-2xl transition-all flex flex-col justify-between group"
                         >
                             <div>
                                 <div className="flex items-center justify-between mb-4">
-                                    <span className={`text-xs font-extrabold px-3 py-1 rounded-full uppercase tracking-wider border ${ch.iconColor}`}>
+                                    <span className={`text-xs font-black px-3.5 py-1 rounded-xl uppercase tracking-wider border ${ch.iconColor}`}>
                                         {ch.platform}
                                     </span>
-                                    <span className="text-xs text-slate-500 font-medium">
+                                    <span className="text-xs text-slate-400 font-medium">
                                         {t('official_channel')}
                                     </span>
                                 </div>
-                                <h3 className="text-xl font-bold text-slate-900 mb-2">
+                                <h3 className="text-xl font-bold text-white mb-2 group-hover:text-cyan-300 transition">
                                     {ch.title[currentLang] || ch.title.en}
                                 </h3>
-                                <p className="text-sm text-slate-600 leading-relaxed mb-6">
+                                <p className="text-sm text-slate-400 leading-relaxed mb-6">
                                     {ch.desc[currentLang] || ch.desc.en}
                                 </p>
 
                                 <div className="flex flex-wrap gap-2 mb-6">
                                     {ch.highlights.map((h, hIdx) => (
-                                        <span key={hIdx} className="text-xs font-medium text-slate-700 bg-white border border-slate-200 px-3 py-1 rounded-lg">
+                                        <span key={hIdx} className="text-xs font-semibold text-slate-300 bg-slate-950/70 border border-slate-800 px-3 py-1.5 rounded-xl">
                                             ✓ {h[currentLang] || h.en}
                                         </span>
                                     ))}
@@ -151,7 +151,7 @@ export default function MediaHub() {
                                     href={ch.url}
                                     target="_blank"
                                     rel="noreferrer"
-                                    className={`inline-flex items-center justify-center w-full sm:w-auto px-6 py-3 rounded-xl text-sm font-bold transition shadow-sm cursor-pointer ${ch.btnColor}`}
+                                    className={`inline-flex items-center justify-center w-full sm:w-auto px-6 py-3.5 rounded-xl text-sm font-bold transition shadow-lg cursor-pointer ${ch.btnColor}`}
                                 >
                                     {ch.actionLabel[currentLang] || ch.actionLabel.en}
                                     <svg className="w-4 h-4 ml-1.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path></svg>
