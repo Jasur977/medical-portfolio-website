@@ -47,7 +47,7 @@ If you prefer to create the services individually in the Render UI:
 2. Settings:
    - **Name**: `endocare-db`
    - **Database**: `websited`
-   - **User**: `postgres`
+   - **User**: `endocare`
    - **Region**: Frankfurt (or closest to you)
    - **Plan**: Free
 3. Click **Create Database**.

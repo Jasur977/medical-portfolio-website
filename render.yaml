@@ -29,8 +29,6 @@ services:
     rootDir: frontend
     buildCommand: npm install && npm run build
     staticPublishPath: dist
-    plan: free
-    region: frankfurt
     routes:
       - type: rewrite
         source: /*
@@ -46,6 +44,6 @@ databases:
   # 3. Managed PostgreSQL Database
   - name: endocare-db
     databaseName: websited
-    user: postgres
+    user: endocare
     plan: free
     region: frankfurt
