@@ -25,31 +25,56 @@ public class DataSeeder implements CommandLineRunner {
 
     @Override
     public void run(String... args) throws Exception {
-        // Seed the database with the doctor's profile if it's empty
-        if (doctorProfileRepository.count() == 0) {
-            
-            String bioAndEducation = "Dr. Elbek Mamatkulov is the Head Pediatric Endocrinologist at the National Children's Medical Center in Tashkent. He has completed international clinical fellowships in pediatric endocrinology at Pusan National University Yangsan Hospital (Korea) and the Royal Hospital for Children, Glasgow (Scotland). He is an active member of ESPE and SSIEM.\n\n" +
-                                     "Education & Fellowships:\n" +
-                                     "• Master's Degree in Endocrinology, Tashkent Medical Academy (2018)\n" +
-                                     "• Pediatric Endocrinology Fellowship, Pusan National University Yangsan Hospital, Korea (2020)\n" +
-                                     "• ESPE Clinical Fellowship, Royal Hospital for Children, Glasgow, Scotland (2024)";
-                                     
-            String publicationsList = "• Mosaic Form of Turner Syndrome with Normal Stature: A Rare Clinical Presentation (2025)\n" +
-                                      "• Report of a case of central precocious puberty in a boy associated with pilocytic astrocytoma (2025)\n" +
-                                      "• Use of the Synacthen test for confirming suspected adrenal insufficiency in children (2025)\n" +
-                                      "• Endocrine and metabolic complications according to genotype in Prader-Willi syndrome (ESPE 2021)";
+        // Seed or update the database with the doctor's profile
+        String bioAndEducation = "Dr. Elbek Mamatkulov — Bolalar va kattalarda murakkab va kam uchrovchi gormonal hamda metabolik kasalliklar bo'yicha mutaxassis. Umumiy ish tajribasi: 11 yil.\n\n" +
+                                 "Xalqaro malaka va stajirovkalar:\n" +
+                                 "• 2026: ESE Postgraduate Training Course in Clinical Endocrinology (Litva 🇱🇹)\n" +
+                                 "• 2024: Royal Hospital for Children, Glazgo — Clinical Fellowship (Buyuk Britaniya 🇬🇧)\n" +
+                                 "• 2024: Salzburg OMI seminari — Tibbiyotda ta'lim (Avstriya 🇦🇹)\n" +
+                                 "• 2024: ESPE Kavkaz va Markaziy Osiyo maktabi (O'zbekiston 🇪🇺🇺🇿)\n" +
+                                 "• 2024: 10-Xalqaro DSD simpoziumi va PG kursi (Shveysariya 🇨🇭)\n" +
+                                 "• 2023: Salzburg CHOP seminari — Bolalar endokrinologiyasi (Avstriya 🇦🇹)\n" +
+                                 "• 2022: 9-Xalqaro DSD simpoziumi va PG kursi (Shveysariya 🇨🇭)\n" +
+                                 "• 2022: Radboudumc Adrenal Masterclass (Niderlandiya 🇳🇱)\n" +
+                                 "• 2021: ESPE Kavkaz va Markaziy Osiyo maktabi (Gruziya 🇬🇪)\n" +
+                                 "• 2019-2020: Pusan National University Yangsan Hospital Fellowship (Janubiy Koreya 🇰🇷)\n\n" +
+                                 "Ish faoliyati va ta'lim:\n" +
+                                 "• 2020 – h.v.: Bolalar milliy tibbiyot markazi (NCMC) bo'lim boshlig'i, vrach endokrinologi & Neoclinic shifokori\n" +
+                                 "• 2018–2019: Bekobod shahar markaziy shifoxonasi bolalar va kattalar endokrinologi\n" +
+                                 "• 2018–2019: 'Shox Med' xususiy klinikasi shifokor-endokrinologi\n" +
+                                 "• 2016–2019: Toshkent Tibbiyot Akademiyasi 3-klinikasi shoshilinch endokrinologiya shifokori\n" +
+                                 "• 2015–2016: Bekobod tuman QVP umumiy amaliyot shifokori\n" +
+                                 "• 2015–2018: Toshkent Tibbiyot Akademiyasi — Endokrinologiya magistraturasi\n" +
+                                 "• 2009–2015: Toshkent Tibbiyot Akademiyasi — Davolash ishi fakulteti";
 
+        String publicationsList = "• Mosaic Form of Turner Syndrome with Normal Stature: A Rare Clinical Presentation (2025)\n" +
+                                  "• Report of a case of central precocious puberty in a boy associated with pilocytic astrocytoma (2025)\n" +
+                                  "• Use of the Synacthen test for confirming suspected adrenal insufficiency in children (2025)\n" +
+                                  "• Endocrine and metabolic complications according to genotype in Prader-Willi syndrome (ESPE 2021)";
+
+        if (doctorProfileRepository.count() == 0) {
             DoctorProfile profile = DoctorProfile.builder()
-                    .name("Mamatkulov Elbek Abdumonnanovich")
-                    .credentials("Head Pediatric Endocrinologist & PhD Researcher")
-                    .clinicLocation("National Children’s Medical Center in Tashkent (NCMC), Tashkent, Uzbekistan")
-                    .contactDetails("elbekmamatkulov1990@gmail.com | +998901876896 | +998900029797")
+                    .name("Dr. Elbek Mamatkulov")
+                    .credentials("Pediatric & Adult Endocrinologist • Head of Department (NCMC)")
+                    .clinicLocation("National Children’s Medical Center in Tashkent (NCMC) & Neoclinic, Tashkent, Uzbekistan")
+                    .contactDetails("elbekmamatkulov1990@gmail.com | +998 91 011 77 11")
                     .biography(bioAndEducation)
                     .publications(publicationsList)
+                    .appointmentBookingLink("https://t.me/elbekendokrinolog")
                     .build();
 
             doctorProfileRepository.save(profile);
             System.out.println("DataSeeder: Successfully inserted Dr. Mamatkulov's profile into the database!");
+        } else {
+            DoctorProfile profile = doctorProfileRepository.findAll().get(0);
+            profile.setName("Dr. Elbek Mamatkulov");
+            profile.setCredentials("Pediatric & Adult Endocrinologist • Head of Department (NCMC)");
+            profile.setClinicLocation("National Children’s Medical Center in Tashkent (NCMC) & Neoclinic, Tashkent, Uzbekistan");
+            profile.setContactDetails("elbekmamatkulov1990@gmail.com | +998 91 011 77 11");
+            profile.setBiography(bioAndEducation);
+            profile.setAppointmentBookingLink("https://t.me/elbekendokrinolog");
+            doctorProfileRepository.save(profile);
+            System.out.println("DataSeeder: Successfully refreshed Dr. Mamatkulov's profile in the database!");
         }
 
         // Seed some sample Clinical Cases if empty
