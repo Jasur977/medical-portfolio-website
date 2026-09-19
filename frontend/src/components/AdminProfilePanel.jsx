@@ -40,14 +40,19 @@ export default function AdminProfilePanel({ profileToEdit, onClose, onProfileUpd
     if (!profileToEdit) return null;
 
     return (
-        <div className="fixed inset-0 bg-gray-900/50 flex items-center justify-center z-50 p-4 overflow-y-auto">
-            <div className="bg-white rounded-xl shadow-2xl w-full max-w-3xl overflow-hidden flex flex-col max-h-[90vh]">
+        <div className="fixed inset-0 bg-slate-950/80 backdrop-blur-md flex items-center justify-center z-50 p-4 overflow-y-auto animate-fadeIn">
+            <div className="bg-slate-900 border border-slate-800 rounded-3xl shadow-2xl w-full max-w-3xl overflow-hidden flex flex-col max-h-[90vh] text-white">
                 
                 {/* Header */}
-                <div className="px-6 py-4 border-b border-gray-200 flex justify-between items-center bg-gray-50">
-                    <h2 className="text-xl font-bold text-gray-900">{t('edit_doctor_profile')}</h2>
-                    <button onClick={onClose} className="text-gray-400 hover:text-gray-600 cursor-pointer">
-                        <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+                <div className="px-6 py-4 border-b border-slate-800 flex justify-between items-center bg-slate-950/80">
+                    <div className="flex items-center space-x-2.5">
+                        <div className="w-8 h-8 rounded-lg bg-cyan-500/20 text-cyan-400 border border-cyan-500/30 flex items-center justify-center">
+                            <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"></path></svg>
+                        </div>
+                        <h2 className="text-lg font-bold text-white tracking-tight">{t('edit_doctor_profile')}</h2>
+                    </div>
+                    <button onClick={onClose} className="text-slate-400 hover:text-white p-1 rounded-lg hover:bg-slate-800 transition cursor-pointer">
+                        <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18L18 6M6 6l12 12"></path></svg>
                     </button>
                 </div>
 
@@ -57,50 +62,106 @@ export default function AdminProfilePanel({ profileToEdit, onClose, onProfileUpd
                         
                         <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
                             <div>
-                                <label className="block text-sm font-medium text-gray-700 mb-1">{t('full_name')}</label>
-                                <input required type="text" name="name" value={formData.name} onChange={handleChange} className="w-full border border-gray-300 rounded-md p-2 focus:ring-blue-500 focus:border-blue-500" />
+                                <label className="block text-xs font-semibold text-slate-300 mb-1.5">{t('full_name')}</label>
+                                <input 
+                                    required 
+                                    type="text" 
+                                    name="name" 
+                                    value={formData.name} 
+                                    onChange={handleChange} 
+                                    className="w-full bg-slate-950 border border-slate-700 rounded-xl shadow-inner p-2.5 text-sm text-white placeholder-slate-500 focus:ring-2 focus:ring-cyan-500 focus:border-cyan-500 outline-none transition" 
+                                />
                             </div>
                             <div>
-                                <label className="block text-sm font-medium text-gray-700 mb-1">{t('credentials_title')}</label>
-                                <input required type="text" name="credentials" value={formData.credentials} onChange={handleChange} className="w-full border border-gray-300 rounded-md p-2 focus:ring-blue-500 focus:border-blue-500" />
+                                <label className="block text-xs font-semibold text-slate-300 mb-1.5">{t('credentials_title')}</label>
+                                <input 
+                                    required 
+                                    type="text" 
+                                    name="credentials" 
+                                    value={formData.credentials} 
+                                    onChange={handleChange} 
+                                    className="w-full bg-slate-950 border border-slate-700 rounded-xl shadow-inner p-2.5 text-sm text-white placeholder-slate-500 focus:ring-2 focus:ring-cyan-500 focus:border-cyan-500 outline-none transition" 
+                                />
                             </div>
                         </div>
 
                         <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
                             <div>
-                                <label className="block text-sm font-medium text-gray-700 mb-1">{t('clinic_location')}</label>
-                                <input type="text" name="clinicLocation" value={formData.clinicLocation} onChange={handleChange} className="w-full border border-gray-300 rounded-md p-2 focus:ring-blue-500 focus:border-blue-500" />
+                                <label className="block text-xs font-semibold text-slate-300 mb-1.5">{t('clinic_location')}</label>
+                                <input 
+                                    type="text" 
+                                    name="clinicLocation" 
+                                    value={formData.clinicLocation} 
+                                    onChange={handleChange} 
+                                    className="w-full bg-slate-950 border border-slate-700 rounded-xl shadow-inner p-2.5 text-sm text-white placeholder-slate-500 focus:ring-2 focus:ring-cyan-500 focus:border-cyan-500 outline-none transition" 
+                                />
                             </div>
                             <div>
-                                <label className="block text-sm font-medium text-gray-700 mb-1">{t('contact_details')}</label>
-                                <input type="text" name="contactDetails" value={formData.contactDetails} onChange={handleChange} className="w-full border border-gray-300 rounded-md p-2 focus:ring-blue-500 focus:border-blue-500" placeholder="Use ' | ' to separate items" />
+                                <label className="block text-xs font-semibold text-slate-300 mb-1.5">{t('contact_details')}</label>
+                                <input 
+                                    type="text" 
+                                    name="contactDetails" 
+                                    value={formData.contactDetails} 
+                                    onChange={handleChange} 
+                                    className="w-full bg-slate-950 border border-slate-700 rounded-xl shadow-inner p-2.5 text-sm text-white placeholder-slate-500 focus:ring-2 focus:ring-cyan-500 focus:border-cyan-500 outline-none transition" 
+                                    placeholder="Use ' | ' to separate items" 
+                                />
                             </div>
                         </div>
 
                         <div>
-                            <label className="block text-sm font-medium text-gray-700 mb-1">{t('appointment_booking_url')}</label>
-                            <input type="url" name="appointmentBookingLink" value={formData.appointmentBookingLink} onChange={handleChange} className="w-full border border-gray-300 rounded-md p-2 focus:ring-blue-500 focus:border-blue-500" placeholder="https://..." />
+                            <label className="block text-xs font-semibold text-slate-300 mb-1.5">{t('appointment_booking_url')}</label>
+                            <input 
+                                type="url" 
+                                name="appointmentBookingLink" 
+                                value={formData.appointmentBookingLink} 
+                                onChange={handleChange} 
+                                className="w-full bg-slate-950 border border-slate-700 rounded-xl shadow-inner p-2.5 text-sm text-white placeholder-slate-500 focus:ring-2 focus:ring-cyan-500 focus:border-cyan-500 outline-none transition" 
+                                placeholder="https://..." 
+                            />
                         </div>
 
                         <div>
-                            <label className="block text-sm font-medium text-gray-700 mb-1">{t('biography_education')}</label>
-                            <textarea required name="biography" rows="6" value={formData.biography} onChange={handleChange} className="w-full border border-gray-300 rounded-md p-2 focus:ring-blue-500 focus:border-blue-500"></textarea>
+                            <label className="block text-xs font-semibold text-slate-300 mb-1.5">{t('biography_education')}</label>
+                            <textarea 
+                                required 
+                                name="biography" 
+                                rows="6" 
+                                value={formData.biography} 
+                                onChange={handleChange} 
+                                className="w-full bg-slate-950 border border-slate-700 rounded-xl shadow-inner p-3 text-sm text-white placeholder-slate-500 focus:ring-2 focus:ring-cyan-500 focus:border-cyan-500 outline-none transition leading-relaxed"
+                            ></textarea>
                         </div>
 
                         <div>
-                            <label className="block text-sm font-medium text-gray-700 mb-1">{t('publications_research')}</label>
-                            <textarea name="publications" rows="5" value={formData.publications} onChange={handleChange} className="w-full border border-gray-300 rounded-md p-2 focus:ring-blue-500 focus:border-blue-500"></textarea>
+                            <label className="block text-xs font-semibold text-slate-300 mb-1.5">{t('publications_research')}</label>
+                            <textarea 
+                                name="publications" 
+                                rows="5" 
+                                value={formData.publications} 
+                                onChange={handleChange} 
+                                className="w-full bg-slate-950 border border-slate-700 rounded-xl shadow-inner p-3 text-sm text-white placeholder-slate-500 focus:ring-2 focus:ring-cyan-500 focus:border-cyan-500 outline-none transition leading-relaxed"
+                            ></textarea>
                         </div>
 
                     </form>
                 </div>
 
                 {/* Footer Actions */}
-                <div className="px-6 py-4 border-t border-gray-200 bg-gray-50 flex justify-end space-x-3">
-                    <button type="button" onClick={onClose} className="px-4 py-2 border border-gray-300 rounded-md text-sm font-medium text-gray-700 hover:bg-gray-50 cursor-pointer">
+                <div className="px-6 py-4 border-t border-slate-800 bg-slate-950/80 flex justify-end space-x-3">
+                    <button 
+                        type="button" 
+                        onClick={onClose} 
+                        className="px-5 py-2.5 border border-slate-700 rounded-xl text-sm font-semibold text-slate-300 hover:bg-slate-800 hover:text-white transition cursor-pointer"
+                    >
                         {t('cancel')}
                     </button>
-                    <button type="submit" form="profile-form" disabled={isSubmitting} className="px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 disabled:opacity-50 cursor-pointer">
+                    <button 
+                        type="submit" 
+                        form="profile-form" 
+                        disabled={isSubmitting} 
+                        className="px-6 py-2.5 rounded-xl shadow-lg shadow-blue-500/25 text-sm font-bold text-white bg-gradient-to-r from-blue-600 to-cyan-600 hover:from-blue-500 hover:to-cyan-500 disabled:opacity-50 cursor-pointer transition"
+                    >
                         {isSubmitting ? t('saving') : t('update_profile')}
                     </button>
                 </div>

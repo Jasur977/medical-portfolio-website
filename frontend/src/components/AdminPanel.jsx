@@ -157,16 +157,16 @@ export default function AdminPanel({ onCaseAdded, caseToEdit, onCloseEdit }) {
     }
 
     return (
-        <div className="fixed inset-0 bg-gray-900/50 flex items-center justify-center z-50 p-4 overflow-y-auto">
-            <div className="bg-white rounded-xl shadow-2xl w-full max-w-2xl overflow-hidden flex flex-col max-h-[90vh]">
+        <div className="fixed inset-0 bg-slate-950/80 backdrop-blur-md flex items-center justify-center z-50 p-4 overflow-y-auto animate-fadeIn">
+            <div className="bg-slate-900 border border-slate-800 text-white rounded-3xl shadow-2xl w-full max-w-2xl overflow-hidden flex flex-col max-h-[90vh]">
                 
                 {/* Header */}
-                <div className="px-6 py-4 border-b border-gray-200 flex justify-between items-center bg-gray-50">
-                    <h2 className="text-xl font-bold text-gray-900">
+                <div className="px-6 py-4 border-b border-slate-800 flex justify-between items-center bg-slate-950/80">
+                    <h2 className="text-lg font-bold text-white tracking-tight">
                         {isEditMode ? t('edit_clinical_case') : t('add_new_case')}
                     </h2>
-                    <button onClick={handleClose} className="text-gray-400 hover:text-gray-600 cursor-pointer">
-                        <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+                    <button onClick={handleClose} className="text-slate-400 hover:text-white p-1 rounded-lg hover:bg-slate-800 transition cursor-pointer">
+                        <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18L18 6M6 6l12 12"></path></svg>
                     </button>
                 </div>
 
@@ -176,48 +176,86 @@ export default function AdminPanel({ onCaseAdded, caseToEdit, onCloseEdit }) {
                         
                         <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
                             <div>
-                                <label className="block text-sm font-medium text-gray-700 mb-1">{t('title')}</label>
-                                <input required type="text" name="title" value={formData.title} onChange={handleChange} className="w-full border border-gray-300 rounded-md shadow-sm p-2 focus:ring-blue-500 focus:border-blue-500" placeholder="e.g. Congenital Hypothyroidism" />
+                                <label className="block text-xs font-semibold text-slate-300 mb-1.5">{t('title')}</label>
+                                <input 
+                                    required 
+                                    type="text" 
+                                    name="title" 
+                                    value={formData.title} 
+                                    onChange={handleChange} 
+                                    className="w-full bg-slate-950 border border-slate-700 rounded-xl shadow-inner p-2.5 text-sm text-white placeholder-slate-500 focus:ring-2 focus:ring-cyan-500 focus:border-cyan-500 outline-none transition" 
+                                    placeholder="e.g. Congenital Hypothyroidism" 
+                                />
                             </div>
                             <div>
-                                <label className="block text-sm font-medium text-gray-700 mb-1">{t('category')}</label>
-                                <input required type="text" name="category" value={formData.category} onChange={handleChange} className="w-full border border-gray-300 rounded-md shadow-sm p-2 focus:ring-blue-500 focus:border-blue-500" placeholder="e.g. Thyroid, Adrenal, Genetics" />
+                                <label className="block text-xs font-semibold text-slate-300 mb-1.5">{t('category')}</label>
+                                <input 
+                                    required 
+                                    type="text" 
+                                    name="category" 
+                                    value={formData.category} 
+                                    onChange={handleChange} 
+                                    className="w-full bg-slate-950 border border-slate-700 rounded-xl shadow-inner p-2.5 text-sm text-white placeholder-slate-500 focus:ring-2 focus:ring-cyan-500 focus:border-cyan-500 outline-none transition" 
+                                    placeholder="e.g. Thyroid, Adrenal, Genetics" 
+                                />
                             </div>
                         </div>
 
                         <div>
-                            <label className="block text-sm font-medium text-gray-700 mb-1">{t('presentation_label')}</label>
-                            <textarea required name="presentation" rows="3" value={formData.presentation} onChange={handleChange} className="w-full border border-gray-300 rounded-md shadow-sm p-2 focus:ring-blue-500 focus:border-blue-500"></textarea>
+                            <label className="block text-xs font-semibold text-slate-300 mb-1.5">{t('presentation_label')}</label>
+                            <textarea 
+                                required 
+                                name="presentation" 
+                                rows="3" 
+                                value={formData.presentation} 
+                                onChange={handleChange} 
+                                className="w-full bg-slate-950 border border-slate-700 rounded-xl shadow-inner p-3 text-sm text-white placeholder-slate-500 focus:ring-2 focus:ring-cyan-500 focus:border-cyan-500 outline-none transition leading-relaxed"
+                            ></textarea>
                         </div>
 
                         <div>
-                            <label className="block text-sm font-medium text-gray-700 mb-1">{t('labs_label')}</label>
-                            <textarea required name="labResults" rows="2" value={formData.labResults} onChange={handleChange} placeholder="TSH: High, T4: Low..." className="w-full border border-gray-300 rounded-md shadow-sm p-2 focus:ring-blue-500 focus:border-blue-500"></textarea>
+                            <label className="block text-xs font-semibold text-slate-300 mb-1.5">{t('labs_label')}</label>
+                            <textarea 
+                                required 
+                                name="labResults" 
+                                rows="2" 
+                                value={formData.labResults} 
+                                onChange={handleChange} 
+                                placeholder="TSH: High, T4: Low..." 
+                                className="w-full bg-slate-950 border border-slate-700 rounded-xl shadow-inner p-3 text-sm text-white placeholder-slate-500 focus:ring-2 focus:ring-cyan-500 focus:border-cyan-500 outline-none transition leading-relaxed"
+                            ></textarea>
                         </div>
 
                         <div>
-                            <label className="block text-sm font-medium text-gray-700 mb-1">{t('management_label')}</label>
-                            <textarea required name="management" rows="3" value={formData.management} onChange={handleChange} className="w-full border border-gray-300 rounded-md shadow-sm p-2 focus:ring-blue-500 focus:border-blue-500"></textarea>
+                            <label className="block text-xs font-semibold text-slate-300 mb-1.5">{t('management_label')}</label>
+                            <textarea 
+                                required 
+                                name="management" 
+                                rows="3" 
+                                value={formData.management} 
+                                onChange={handleChange} 
+                                className="w-full bg-slate-950 border border-slate-700 rounded-xl shadow-inner p-3 text-sm text-white placeholder-slate-500 focus:ring-2 focus:ring-cyan-500 focus:border-cyan-500 outline-none transition leading-relaxed"
+                            ></textarea>
                         </div>
 
                         {/* Image Upload Section */}
-                        <div className="border border-gray-200 rounded-md p-4 bg-gray-50">
-                            <label className="block text-sm font-bold text-gray-700 mb-2">{t('upload_image')}</label>
+                        <div className="border border-slate-800 rounded-2xl p-4 bg-slate-950/60">
+                            <label className="block text-xs font-bold text-slate-300 mb-2">{t('upload_image')}</label>
                             <div className="flex items-center space-x-4">
                                 <input 
                                     type="file" 
                                     accept="image/*" 
                                     onChange={handleFileChange} 
                                     ref={fileInputRef}
-                                    className="block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-md file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100 cursor-pointer"
+                                    className="block w-full text-xs text-slate-400 file:mr-4 file:py-2 file:px-4 file:rounded-xl file:border-0 file:text-xs file:font-semibold file:bg-blue-600/20 file:text-cyan-300 hover:file:bg-blue-600/30 cursor-pointer"
                                 />
-                                {isUploading && <span className="text-sm text-blue-600 font-medium whitespace-nowrap">{t('uploading')}</span>}
+                                {isUploading && <span className="text-xs text-cyan-400 font-medium whitespace-nowrap">{t('uploading')}</span>}
                             </div>
                             
                             {/* Preview */}
                             {formData.imageUrl && (
                                 <div className="mt-3">
-                                    <div className="relative w-24 h-24 border border-gray-300 rounded overflow-hidden">
+                                    <div className="relative w-24 h-24 border border-slate-700 rounded-xl overflow-hidden shadow-md">
                                         <img src={formData.imageUrl} alt="Preview" className="w-full h-full object-cover" />
                                     </div>
                                 </div>
@@ -228,19 +266,36 @@ export default function AdminPanel({ onCaseAdded, caseToEdit, onCloseEdit }) {
                         </div>
 
                         <div className="flex items-center pt-2">
-                            <input type="checkbox" name="isPublished" checked={formData.isPublished} onChange={handleChange} className="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded cursor-pointer" />
-                            <label className="ml-2 block text-sm text-gray-900 select-none cursor-pointer" onClick={() => setFormData(prev => ({ ...prev, isPublished: !prev.isPublished }))}>{t('publish_immediately')}</label>
+                            <input 
+                                type="checkbox" 
+                                name="isPublished" 
+                                checked={formData.isPublished} 
+                                onChange={handleChange} 
+                                className="h-4 w-4 text-cyan-500 focus:ring-cyan-400 border-slate-700 rounded bg-slate-950 cursor-pointer" 
+                            />
+                            <label className="ml-2 block text-xs font-semibold text-slate-300 select-none cursor-pointer" onClick={() => setFormData(prev => ({ ...prev, isPublished: !prev.isPublished }))}>
+                                {t('publish_immediately')}
+                            </label>
                         </div>
 
                     </form>
                 </div>
 
                 {/* Footer Actions */}
-                <div className="px-6 py-4 border-t border-gray-200 bg-gray-50 flex justify-end space-x-3">
-                    <button type="button" onClick={handleClose} className="px-4 py-2 border border-gray-300 rounded-md text-sm font-medium text-gray-700 hover:bg-gray-50 cursor-pointer">
+                <div className="px-6 py-4 border-t border-slate-800 bg-slate-950/80 flex justify-end space-x-3">
+                    <button 
+                        type="button" 
+                        onClick={handleClose} 
+                        className="px-5 py-2.5 border border-slate-700 rounded-xl text-sm font-semibold text-slate-300 hover:bg-slate-800 hover:text-white transition cursor-pointer"
+                    >
                         {t('cancel')}
                     </button>
-                    <button type="submit" form="add-case-form" disabled={isSubmitting || isUploading} className="px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 disabled:opacity-50 cursor-pointer">
+                    <button 
+                        type="submit" 
+                        form="add-case-form" 
+                        disabled={isSubmitting || isUploading} 
+                        className="px-6 py-2.5 rounded-xl shadow-lg shadow-blue-500/25 text-sm font-bold text-white bg-gradient-to-r from-blue-600 to-cyan-600 hover:from-blue-500 hover:to-cyan-500 disabled:opacity-50 cursor-pointer transition"
+                    >
                         {isSubmitting ? t('saving') : (isEditMode ? t('update_case') : t('save_clinical_case'))}
                     </button>
                 </div>

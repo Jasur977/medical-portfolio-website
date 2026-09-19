@@ -180,15 +180,15 @@ export default function AdminCoursePanel({ onCourseAdded, courseToEdit, onCloseE
     }
 
     return (
-        <div className="fixed inset-0 bg-gray-900/50 flex items-center justify-center z-50 p-4 overflow-y-auto">
-            <div className="bg-white rounded-xl shadow-2xl w-full max-w-2xl overflow-hidden flex flex-col max-h-[90vh]">
+        <div className="fixed inset-0 bg-slate-950/80 backdrop-blur-md flex items-center justify-center z-50 p-4 overflow-y-auto animate-fadeIn">
+            <div className="bg-slate-900 border border-slate-800 text-white rounded-3xl shadow-2xl w-full max-w-2xl overflow-hidden flex flex-col max-h-[90vh]">
                 
                 {/* Header Navigation */}
-                <div className="px-6 py-4 border-b border-gray-200 flex justify-between items-center bg-gray-50">
-                    <div className="flex space-x-4">
+                <div className="px-6 py-4 border-b border-slate-800 flex justify-between items-center bg-slate-950/80">
+                    <div className="flex space-x-3">
                         <button 
                             onClick={() => setMode('course')}
-                            className={`text-lg font-bold px-2 py-1 cursor-pointer ${mode === 'course' ? 'text-green-700 border-b-2 border-green-700' : 'text-gray-500 hover:text-gray-700'}`}
+                            className={`text-sm font-bold px-3 py-1.5 rounded-xl cursor-pointer transition ${mode === 'course' ? 'text-cyan-300 bg-cyan-500/20 border border-cyan-500/30' : 'text-slate-400 hover:text-white hover:bg-slate-800'}`}
                         >
                             {isEditMode ? t('edit_course') : t('add_course')}
                         </button>
@@ -197,13 +197,13 @@ export default function AdminCoursePanel({ onCourseAdded, courseToEdit, onCloseE
                                 setLessonForm(prev => ({...INITIAL_LESSON_FORM, courseId: prev.courseId, id: null, title: '', contentBody: '', videoUrl: '', durationMinutes: 0}));
                                 setMode('lesson');
                             }}
-                            className={`text-lg font-bold px-2 py-1 cursor-pointer ${(mode === 'lesson' || mode === 'lesson_edit') ? 'text-green-700 border-b-2 border-green-700' : 'text-gray-500 hover:text-gray-700'}`}
+                            className={`text-sm font-bold px-3 py-1.5 rounded-xl cursor-pointer transition ${(mode === 'lesson' || mode === 'lesson_edit') ? 'text-cyan-300 bg-cyan-500/20 border border-cyan-500/30' : 'text-slate-400 hover:text-white hover:bg-slate-800'}`}
                         >
                             {mode === 'lesson_edit' ? t('edit_lesson') : t('add_lesson')}
                         </button>
                     </div>
-                    <button onClick={handleClose} className="text-gray-400 hover:text-gray-600 cursor-pointer">
-                        <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+                    <button onClick={handleClose} className="text-slate-400 hover:text-white p-1 rounded-lg hover:bg-slate-800 transition cursor-pointer">
+                        <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18L18 6M6 6l12 12"></path></svg>
                     </button>
                 </div>
 
@@ -215,41 +215,69 @@ export default function AdminCoursePanel({ onCourseAdded, courseToEdit, onCloseE
                         <div className="space-y-6">
                             <form id="course-form" onSubmit={handleSubmitCourse} className="space-y-4">
                                 <div>
-                                    <label className="block text-sm font-medium text-gray-700 mb-1">{t('course_title')}</label>
-                                    <input required type="text" name="title" value={courseForm.title} onChange={handleCourseChange} className="w-full border border-gray-300 rounded-md shadow-sm p-2 focus:ring-green-500 focus:border-green-500" />
+                                    <label className="block text-xs font-semibold text-slate-300 mb-1.5">{t('course_title')}</label>
+                                    <input 
+                                        required 
+                                        type="text" 
+                                        name="title" 
+                                        value={courseForm.title} 
+                                        onChange={handleCourseChange} 
+                                        className="w-full bg-slate-950 border border-slate-700 rounded-xl shadow-inner p-2.5 text-sm text-white placeholder-slate-500 focus:ring-2 focus:ring-cyan-500 focus:border-cyan-500 outline-none transition" 
+                                    />
                                 </div>
                                 <div>
-                                    <label className="block text-sm font-medium text-gray-700 mb-1">{t('target_audience')}</label>
-                                    <input required type="text" name="targetAudience" value={courseForm.targetAudience} onChange={handleCourseChange} className="w-full border border-gray-300 rounded-md shadow-sm p-2 focus:ring-green-500 focus:border-green-500" placeholder="e.g., Pediatricians, Residents" />
+                                    <label className="block text-xs font-semibold text-slate-300 mb-1.5">{t('target_audience')}</label>
+                                    <input 
+                                        required 
+                                        type="text" 
+                                        name="targetAudience" 
+                                        value={courseForm.targetAudience} 
+                                        onChange={handleCourseChange} 
+                                        className="w-full bg-slate-950 border border-slate-700 rounded-xl shadow-inner p-2.5 text-sm text-white placeholder-slate-500 focus:ring-2 focus:ring-cyan-500 focus:border-cyan-500 outline-none transition" 
+                                        placeholder="e.g., Pediatricians, Residents" 
+                                    />
                                 </div>
                                 <div>
-                                    <label className="block text-sm font-medium text-gray-700 mb-1">{t('description')}</label>
-                                    <textarea required name="description" rows="3" value={courseForm.description} onChange={handleCourseChange} className="w-full border border-gray-300 rounded-md shadow-sm p-2 focus:ring-green-500 focus:border-green-500"></textarea>
+                                    <label className="block text-xs font-semibold text-slate-300 mb-1.5">{t('description')}</label>
+                                    <textarea 
+                                        required 
+                                        name="description" 
+                                        rows="3" 
+                                        value={courseForm.description} 
+                                        onChange={handleCourseChange} 
+                                        className="w-full bg-slate-950 border border-slate-700 rounded-xl shadow-inner p-3 text-sm text-white placeholder-slate-500 focus:ring-2 focus:ring-cyan-500 focus:border-cyan-500 outline-none transition leading-relaxed"
+                                    ></textarea>
                                 </div>
-                                <div className="border border-gray-200 rounded-md p-4 bg-gray-50">
-                                    <label className="block text-sm font-bold text-gray-700 mb-2">{t('upload_course_cover')}</label>
-                                    <input type="file" accept="image/*" onChange={handleImageUpload} ref={fileInputRef} className="block w-full text-sm text-gray-500 cursor-pointer file:mr-4 file:py-2 file:px-4 file:rounded-md file:border-0 file:text-sm file:font-semibold file:bg-green-50 file:text-green-700" />
-                                    {isUploading && <span className="text-sm text-green-600 mt-1 block">{t('uploading')}</span>}
-                                    {courseForm.imageUrl && <div className="mt-2"><img src={courseForm.imageUrl} alt="Preview" className="w-24 h-16 object-cover rounded border border-gray-300" /></div>}
+                                <div className="border border-slate-800 rounded-2xl p-4 bg-slate-950/60">
+                                    <label className="block text-xs font-bold text-slate-300 mb-2">{t('upload_course_cover')}</label>
+                                    <input 
+                                        type="file" 
+                                        accept="image/*" 
+                                        onChange={handleImageUpload} 
+                                        ref={fileInputRef} 
+                                        className="block w-full text-xs text-slate-400 file:mr-4 file:py-2 file:px-4 file:rounded-xl file:border-0 file:text-xs file:font-semibold file:bg-blue-600/20 file:text-cyan-300 hover:file:bg-blue-600/30 cursor-pointer" 
+                                    />
+                                    {isUploading && <span className="text-xs text-cyan-400 mt-1 block">{t('uploading')}</span>}
+                                    {courseForm.imageUrl && <div className="mt-2"><img src={courseForm.imageUrl} alt="Preview" className="w-24 h-16 object-cover rounded-xl border border-slate-700" /></div>}
                                 </div>
                             </form>
 
                             {/* Existing Lessons List (Only visible when editing a course) */}
                             {isEditMode && courseLessons.length > 0 && (
-                                <div className="mt-8 border-t border-gray-200 pt-6">
-                                    <h3 className="text-lg font-bold text-gray-900 mb-4">{t('existing_lessons')}</h3>
+                                <div className="mt-8 border-t border-slate-800 pt-6">
+                                    <h3 className="text-base font-bold text-white mb-4">{t('existing_lessons')}</h3>
                                     <div className="space-y-3">
                                         {courseLessons.sort((a,b) => a.orderIndex - b.orderIndex).map((lesson) => (
-                                            <div key={lesson.id} className="flex justify-between items-center p-3 bg-white border border-gray-200 rounded-md shadow-sm">
+                                            <div key={lesson.id} className="flex justify-between items-center p-3 bg-slate-950/70 border border-slate-800 rounded-2xl shadow-sm">
                                                 <div className="flex items-center">
-                                                    <span className="bg-gray-100 text-gray-600 text-xs font-bold px-2 py-1 rounded mr-3">
+                                                    <span className="bg-slate-800 text-cyan-300 border border-slate-700 text-xs font-bold px-2.5 py-1 rounded-lg mr-3">
                                                         #{lesson.orderIndex}
                                                     </span>
-                                                    <span className="font-medium text-gray-800">{lesson.title}</span>
+                                                    <span className="font-semibold text-slate-200 text-sm">{lesson.title}</span>
                                                 </div>
                                                 <button 
                                                     onClick={() => editLesson(lesson)}
-                                                    className="text-blue-600 hover:text-blue-800 text-sm font-medium px-3 py-1 bg-blue-50 rounded hover:bg-blue-100 transition-colors cursor-pointer"
+                                                    className="text-cyan-300 hover:text-white text-xs font-bold px-3 py-1.5 bg-slate-800 hover:bg-slate-700 rounded-xl border border-slate-700 transition cursor-pointer"
                                                 >
                                                     {t('edit_lesson')}
                                                 </button>
@@ -264,25 +292,54 @@ export default function AdminCoursePanel({ onCourseAdded, courseToEdit, onCloseE
                     {/* LESSON FORM */}
                     {(mode === 'lesson' || mode === 'lesson_edit') && (
                         <form id="lesson-form" onSubmit={handleSubmitLesson} className="space-y-4">
-                            <div className="bg-yellow-50 border border-yellow-200 p-3 rounded-md mb-4 shadow-sm">
-                                <label className="block text-sm font-bold text-yellow-800 mb-1">Parent Course ID</label>
-                                <input required type="text" name="courseId" value={lessonForm.courseId} onChange={handleLessonChange} className="w-full border border-yellow-300 rounded-md p-2 focus:ring-yellow-500 focus:border-yellow-500 text-sm font-mono text-gray-600 bg-yellow-100/50" readOnly={isEditMode} placeholder="e.g., 123e4567-..." />
+                            <div className="bg-slate-950/80 border border-slate-800 p-3 rounded-2xl mb-4 shadow-sm">
+                                <label className="block text-xs font-bold text-slate-300 mb-1">Parent Course ID</label>
+                                <input 
+                                    required 
+                                    type="text" 
+                                    name="courseId" 
+                                    value={lessonForm.courseId} 
+                                    onChange={handleLessonChange} 
+                                    className="w-full bg-slate-900 border border-slate-700 rounded-xl p-2.5 text-xs font-mono text-cyan-300 focus:ring-2 focus:ring-cyan-500 outline-none" 
+                                    readOnly={isEditMode} 
+                                    placeholder="e.g., 123e4567-..." 
+                                />
                             </div>
 
                             <div className="grid grid-cols-1 gap-4 sm:grid-cols-4">
                                 <div className="sm:col-span-3">
-                                    <label className="block text-sm font-medium text-gray-700 mb-1">{t('lesson_title')}</label>
-                                    <input required type="text" name="title" value={lessonForm.title} onChange={handleLessonChange} className="w-full border border-gray-300 rounded-md shadow-sm p-2 focus:ring-green-500 focus:border-green-500" />
+                                    <label className="block text-xs font-semibold text-slate-300 mb-1.5">{t('lesson_title')}</label>
+                                    <input 
+                                        required 
+                                        type="text" 
+                                        name="title" 
+                                        value={lessonForm.title} 
+                                        onChange={handleLessonChange} 
+                                        className="w-full bg-slate-950 border border-slate-700 rounded-xl shadow-inner p-2.5 text-sm text-white placeholder-slate-500 focus:ring-2 focus:ring-cyan-500 focus:border-cyan-500 outline-none transition" 
+                                    />
                                 </div>
                                 <div className="sm:col-span-1">
-                                    <label className="block text-sm font-medium text-gray-700 mb-1">{t('order_index')}</label>
-                                    <input required type="number" min="1" name="orderIndex" value={lessonForm.orderIndex} onChange={handleLessonChange} className="w-full border border-gray-300 rounded-md shadow-sm p-2 focus:ring-green-500 focus:border-green-500" />
+                                    <label className="block text-xs font-semibold text-slate-300 mb-1.5">{t('order_index')}</label>
+                                    <input 
+                                        required 
+                                        type="number" 
+                                        min="1" 
+                                        name="orderIndex" 
+                                        value={lessonForm.orderIndex} 
+                                        onChange={handleLessonChange} 
+                                        className="w-full bg-slate-950 border border-slate-700 rounded-xl shadow-inner p-2.5 text-sm text-white placeholder-slate-500 focus:ring-2 focus:ring-cyan-500 focus:border-cyan-500 outline-none transition" 
+                                    />
                                 </div>
                             </div>
 
                             <div>
-                                <label className="block text-sm font-medium text-gray-700 mb-1">{t('video_provider')}</label>
-                                <select name="videoProvider" value={lessonForm.videoProvider} onChange={handleLessonChange} className="w-full border border-gray-300 rounded-md shadow-sm p-2 focus:ring-green-500 focus:border-green-500">
+                                <label className="block text-xs font-semibold text-slate-300 mb-1.5">{t('video_provider')}</label>
+                                <select 
+                                    name="videoProvider" 
+                                    value={lessonForm.videoProvider} 
+                                    onChange={handleLessonChange} 
+                                    className="w-full bg-slate-950 border border-slate-700 rounded-xl shadow-inner p-2.5 text-sm text-white focus:ring-2 focus:ring-cyan-500 focus:border-cyan-500 outline-none transition"
+                                >
                                     <option value="DIRECT">Direct Upload / Local File</option>
                                     <option value="YOUTUBE">YouTube (Embed Link)</option>
                                     <option value="VIMEO">Vimeo (Embed Link)</option>
@@ -290,20 +347,27 @@ export default function AdminCoursePanel({ onCourseAdded, courseToEdit, onCloseE
                             </div>
 
                             {/* Dynamic Video Input based on Provider */}
-                            <div className="bg-gray-50 border border-gray-200 p-4 rounded-md">
-                                <label className="block text-sm font-bold text-gray-700 mb-2">
+                            <div className="bg-slate-950/60 border border-slate-800 p-4 rounded-2xl">
+                                <label className="block text-xs font-bold text-slate-300 mb-2">
                                     {lessonForm.videoProvider === 'DIRECT' ? 'Direct Video URL' : t('video_url')}
                                 </label>
                                 
                                 {lessonForm.videoProvider !== 'DIRECT' && (
-                                    <p className="text-xs text-gray-500 mb-2">{t('embed_url_hint')}</p>
+                                    <p className="text-xs text-slate-400 mb-2">{t('embed_url_hint')}</p>
                                 )}
                                 
-                                <input type="text" name="videoUrl" value={lessonForm.videoUrl} onChange={handleLessonChange} className="w-full border border-gray-300 rounded-md shadow-sm p-2 focus:ring-green-500 focus:border-green-500" placeholder="https://..." />
+                                <input 
+                                    type="text" 
+                                    name="videoUrl" 
+                                    value={lessonForm.videoUrl} 
+                                    onChange={handleLessonChange} 
+                                    className="w-full bg-slate-950 border border-slate-700 rounded-xl shadow-inner p-2.5 text-sm text-white placeholder-slate-500 focus:ring-2 focus:ring-cyan-500 focus:border-cyan-500 outline-none transition" 
+                                    placeholder="https://..." 
+                                />
                                 
                                 {lessonForm.videoProvider === 'DIRECT' && (
-                                    <div className="mt-3 pt-3 border-t border-gray-200">
-                                        <label className="block text-sm font-medium text-gray-700 mb-1">Or Upload Video File (.mp4)</label>
+                                    <div className="mt-3 pt-3 border-t border-slate-800">
+                                        <label className="block text-xs font-medium text-slate-300 mb-1">Or Upload Video File (.mp4)</label>
                                         <input 
                                             type="file" 
                                             accept="video/mp4,video/webm" 
@@ -324,36 +388,55 @@ export default function AdminCoursePanel({ onCourseAdded, courseToEdit, onCloseE
                                                     setIsUploading(false);
                                                 }
                                             }} 
-                                            className="block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-md file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-700 cursor-pointer" 
+                                            className="block w-full text-xs text-slate-400 file:mr-4 file:py-2 file:px-4 file:rounded-xl file:border-0 file:text-xs file:font-semibold file:bg-blue-600/20 file:text-cyan-300 hover:file:bg-blue-600/30 cursor-pointer" 
                                         />
-                                        {isUploading && <span className="text-sm text-green-600 mt-1 block">{t('uploading')}</span>}
+                                        {isUploading && <span className="text-xs text-cyan-400 mt-1 block">{t('uploading')}</span>}
                                     </div>
                                 )}
                             </div>
 
                             <div>
-                                <label className="block text-sm font-medium text-gray-700 mb-1">{t('duration_mins')}</label>
-                                <input required type="number" min="0" name="durationMinutes" value={lessonForm.durationMinutes} onChange={handleLessonChange} className="w-32 border border-gray-300 rounded-md shadow-sm p-2 focus:ring-green-500 focus:border-green-500" />
+                                <label className="block text-xs font-semibold text-slate-300 mb-1.5">{t('duration_mins')}</label>
+                                <input 
+                                    required 
+                                    type="number" 
+                                    min="0" 
+                                    name="durationMinutes" 
+                                    value={lessonForm.durationMinutes} 
+                                    onChange={handleLessonChange} 
+                                    className="w-32 bg-slate-950 border border-slate-700 rounded-xl shadow-inner p-2.5 text-sm text-white focus:ring-2 focus:ring-cyan-500 focus:border-cyan-500 outline-none transition" 
+                                />
                             </div>
                             
                             <div>
-                                <label className="block text-sm font-medium text-gray-700 mb-1">{t('lesson_content')}</label>
-                                <textarea required name="contentBody" rows="5" value={lessonForm.contentBody} onChange={handleLessonChange} className="w-full border border-gray-300 rounded-md shadow-sm p-2 focus:ring-green-500 focus:border-green-500"></textarea>
+                                <label className="block text-xs font-semibold text-slate-300 mb-1.5">{t('lesson_content')}</label>
+                                <textarea 
+                                    required 
+                                    name="contentBody" 
+                                    rows="5" 
+                                    value={lessonForm.contentBody} 
+                                    onChange={handleLessonChange} 
+                                    className="w-full bg-slate-950 border border-slate-700 rounded-xl shadow-inner p-3 text-sm text-white placeholder-slate-500 focus:ring-2 focus:ring-cyan-500 focus:border-cyan-500 outline-none transition leading-relaxed"
+                                ></textarea>
                             </div>
                         </form>
                     )}
                 </div>
 
                 {/* Footer Actions */}
-                <div className="px-6 py-4 border-t border-gray-200 bg-gray-50 flex justify-end space-x-3">
-                    <button type="button" onClick={handleClose} className="px-4 py-2 border border-gray-300 rounded-md text-sm font-medium text-gray-700 hover:bg-gray-50 cursor-pointer">
+                <div className="px-6 py-4 border-t border-slate-800 bg-slate-950/80 flex justify-end space-x-3">
+                    <button 
+                        type="button" 
+                        onClick={handleClose} 
+                        className="px-5 py-2.5 border border-slate-700 rounded-xl text-sm font-semibold text-slate-300 hover:bg-slate-800 hover:text-white transition cursor-pointer"
+                    >
                         {t('cancel')}
                     </button>
                     <button 
                         type="submit" 
                         form={mode === 'course' ? 'course-form' : 'lesson-form'} 
                         disabled={isSubmitting || isUploading} 
-                        className="px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-green-700 hover:bg-green-800 disabled:opacity-50 cursor-pointer"
+                        className="px-6 py-2.5 rounded-xl shadow-lg shadow-blue-500/25 text-sm font-bold text-white bg-gradient-to-r from-blue-600 to-cyan-600 hover:from-blue-500 hover:to-cyan-500 disabled:opacity-50 cursor-pointer transition"
                     >
                         {isSubmitting ? t('saving') : (mode === 'course' ? (isEditMode ? t('update_case') : t('save_course')) : (mode === 'lesson_edit' ? t('edit_lesson') : t('save_lesson')))}
                     </button>
